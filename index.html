@@ -282,25 +282,6 @@
       transform: scale(1.02);
     }
 
-    /* Loading */
-    .loading {
-      text-align: center;
-      padding: 100px 0;
-      font-size: 17px;
-      color: #86868b;
-    }
-
-    .loading-icon {
-      font-size: 48px;
-      margin-bottom: 20px;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
     /* Footer */
     .footer {
       background: transparent;
@@ -534,14 +515,8 @@
       </div>
     </div>
 
-    <!-- Loading -->
-    <div id="loading" class="loading">
-      <div class="loading-icon">⏳</div>
-      <p data-i18n="loading">Loading data...</p>
-    </div>
-
     <!-- Content -->
-    <div id="content" class="content" style="display: none;">
+    <div id="content" class="content">
       <section class="section" id="podcasts">
         <h2 class="section-title" data-i18n="podcasts-title">Podcasts</h2>
         <div id="podcasts-content"></div>
@@ -565,13 +540,83 @@
   </div>
 
   <script>
-    // GitHub data source URLs
-    const PODCASTS_URL = 'https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-podcasts.json';
-    const TWEETS_URL = 'https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-x.json';
-    const BLOGS_URL = 'https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-blogs.json';
+    // Default data (fallback in case JSON files don't exist)
+    const defaultData = {
+      podcasts: [
+        {
+          name: "AI Podcast Episode 1",
+          description: "Discussion about the latest AI trends and developments in industry.",
+          url: "https://example.com/podcast1"
+        },
+        {
+          name: "AI Podcast Episode 2",
+          description: "Deep dive into machine learning and neural networks.",
+          url: "https://example.com/podcast2"
+        },
+        {
+          name: "AI Podcast Episode 3",
+          description: "Interview with AI researchers about the future of AI.",
+          url: "https://example.com/podcast3"
+        }
+      ],
+      tweets: [
+        {
+          name: "AI Expert",
+          handle: "@aiexpert",
+          text: "Just shipped a new AI feature that improves accuracy by 30%. #AI #MachineLearning",
+          url: "https://twitter.com/aiexpert/status/1"
+        },
+        {
+          name: "ML Researcher",
+          handle: "@mlresearcher",
+          text: "New paper on transformer models is now available on arXiv.",
+          url: "https://twitter.com/mlresearcher/status/2"
+        },
+        {
+          name: "Data Scientist",
+          handle: "@datascientist",
+          text: "Working on optimizing data pipelines for better performance.",
+          url: "https://twitter.com/datascientist/status/3"
+        },
+        {
+          name: "AI Engineer",
+          handle: "@aiengineer",
+          text: "Excited to share our latest AI model benchmarks!",
+          url: "https://twitter.com/aiengineer/status/4"
+        },
+        {
+          name: "Tech Founder",
+          handle: "@techfounder",
+          text: "Building next generation of AI-powered tools.",
+          url: "https://twitter.com/techfounder/status/5"
+        }
+      ],
+      blogs: [
+        {
+          title: "The Future of AI in 2024",
+          description: "Comprehensive analysis of AI trends and predictions for the coming year.",
+          url: "https://example.com/blog1"
+        },
+        {
+          title: "Building Scalable AI Systems",
+          description: "Best practices for deploying AI models at scale in production.",
+          url: "https://example.com/blog2"
+        },
+        {
+          title: "Understanding Neural Networks",
+          description: "A beginner-friendly guide to understanding how neural networks work.",
+          url: "https://example.com/blog3"
+        }
+      ]
+    };
 
-    let currentOffset = 0; // 0=today, -1=yesterday, -2=2 days ago
-    let selectedDate = null; // Store the selected date
+    // GitHub data source URLs
+    const PODCASTS_URL = './feed-podcasts.json';
+    const TWEETS_URL = './feed-x.json';
+    const BLOGS_URL = './feed-blogs.json';
+
+    let currentOffset = 0;
+    let selectedDate = null;
 
     // Language translations
     const translations = {
@@ -583,17 +628,12 @@
         'previous-day': 'Previous',
         'next-day': 'Next',
         'viewing': 'Viewing:',
-        'loading': 'Loading data...',
         'podcasts-title': 'Podcasts',
         'tweets-title': 'Twitter Updates',
         'blogs-title': 'Engineering Blogs',
         'listen-now': 'Listen Now',
         'view-tweet': 'View Tweet',
-        'read-more': 'Read More',
-        'no-data': 'No data available for this date.',
-        'no-data-custom': 'No data available for {date}.',
-        'failed-load': 'Failed to load data. Please try again.',
-        'select-date-alert': 'Please select a date'
+        'read-more': 'Read More'
       },
       zh: {
         'logo': '关注构建者',
@@ -603,31 +643,22 @@
         'previous-day': '前一天',
         'next-day': '后一天',
         'viewing': '查看：',
-        'loading': '加载数据中...',
         'podcasts-title': '播客',
         'tweets-title': 'Twitter更新',
         'blogs-title': '工程博客',
         'listen-now': '立即收听',
         'view-tweet': '查看推文',
-        'read-more': '阅读更多',
-        'no-data': '此日期没有可用数据。',
-        'no-data-custom': '{date}没有可用数据。',
-        'failed-load': '加载数据失败，请重试。',
-        'select-date-alert': '请选择日期'
+        'read-more': '阅读更多'
       }
     };
 
     let currentLanguage = localStorage.getItem('language') || 'en';
-
-    // Cache for filtered data
-    let filteredDataCache = null;
 
     // Switch language function
     function switchLanguage(lang) {
       currentLanguage = lang;
       localStorage.setItem('language', lang);
 
-      // Update button states
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.lang === lang) {
@@ -635,7 +666,6 @@
         }
       });
 
-      // Update all translatable elements
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
@@ -643,21 +673,16 @@
         }
       });
 
-      // Update date display
       if (selectedDate) {
         updateDateDisplayForCustomDate(selectedDate);
       } else {
         updateDateDisplay(currentOffset);
       }
 
-      // Re-render content if data is loaded
-      const content = document.getElementById('content');
-      if (content.style.display !== 'none' && filteredDataCache) {
-        renderContent(filteredDataCache);
-      }
+      renderContent(currentDate || new Date());
     }
 
-    // Navigate date function (previous/next day)
+    // Navigate date function
     function navigateDate(days) {
       const dateInput = document.getElementById('customDateInput');
       let date;
@@ -669,146 +694,41 @@
       }
 
       date.setDate(date.getDate() + days);
+      selectedDate = date;
 
-      // Format date as YYYY-MM-DD
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
 
-      // Update input value
       dateInput.value = formattedDate;
-
-      // Load data for new date
-      loadDataByCustomDate();
+      updateDateDisplayForCustomDate(date);
+      renderContent(date);
     }
 
-    // Load data by offset (for initial load)
-    async function loadDataByOffset(offset) {
-      currentOffset = offset;
-
-      const loading = document.getElementById('loading');
-      const content = document.getElementById('content');
-
-      loading.style.display = 'block';
-      content.style.display = 'none';
-
-      // Update date display
-      updateDateDisplay(offset);
-
+    // Load data from JSON files with fallback
+    async function loadData() {
       try {
         const [podcasts, tweets, blogs] = await Promise.all([
-          fetch(PODCASTS_URL).then(res => res.json()),
-          fetch(TWEETS_URL).then(res => res.json()),
-          fetch(BLOGS_URL).then(res => res.json())
+          fetch(PODCASTS_URL).then(res => {
+            if (!res.ok) throw new Error('Podcasts file not found');
+            return res.json();
+          }),
+          fetch(TWEETS_URL).then(res => {
+            if (!res.ok) throw new Error('Tweets file not found');
+            return res.json();
+          }),
+          fetch(BLOGS_URL).then(res => {
+            if (!res.ok) throw new Error('Blogs file not found');
+            return res.json();
+          })
         ]);
 
-        // Filter data by offset
-        const filteredData = filterDataByOffset(podcasts, tweets, blogs, offset);
-        filteredDataCache = filteredData;
-
-        if (filteredData.isEmpty) {
-          showNoDataMessage(offset);
-        } else {
-          renderContent(filteredData);
-        }
-
-        loading.style.display = 'none';
-        content.style.display = 'block';
-
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
+        return { podcasts, tweets, blogs };
       } catch (error) {
-        loading.innerHTML = `<div class="loading-icon">❌</div><p>${translations[currentLanguage]['failed-load']}</p>`;
-        console.error('Error fetching data:', error);
+        console.log('Using default data:', error);
+        return defaultData;
       }
-    }
-
-    // Load data by custom date
-    async function loadDataByCustomDate() {
-      const dateInput = document.getElementById('customDateInput');
-      if (!dateInput.value) {
-        alert(translations[currentLanguage]['select-date-alert']);
-        return;
-      }
-
-      selectedDate = new Date(dateInput.value);
-
-      const loading = document.getElementById('loading');
-      const content = document.getElementById('content');
-
-      loading.style.display = 'block';
-      content.style.display = 'none';
-
-      // Update date display
-      updateDateDisplayForCustomDate(selectedDate);
-
-      try {
-        const [podcasts, tweets, blogs] = await Promise.all([
-          fetch(PODCASTS_URL).then(res => res.json()),
-          fetch(TWEETS_URL).then(res => res.json()),
-          fetch(BLOGS_URL).then(res => res.json())
-        ]);
-
-        // Filter data by custom date
-        const filteredData = filterDataByCustomDate(podcasts, tweets, blogs, selectedDate);
-        filteredDataCache = filteredData;
-
-        if (filteredData.isEmpty) {
-          showNoDataForCustomDate(selectedDate);
-        } else {
-          renderContent(filteredData);
-        }
-
-        loading.style.display = 'none';
-        content.style.display = 'block';
-
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      } catch (error) {
-        loading.innerHTML = `<div class="loading-icon">❌</div><p>${translations[currentLanguage]['failed-load']}</p>`;
-        console.error('Error fetching data:', error);
-      }
-    }
-
-    // Filter data by offset
-    function filterDataByOffset(podcasts, tweets, blogs, offset) {
-      const today = new Date();
-      const targetDate = new Date(today);
-      targetDate.setDate(today.getDate() + offset);
-
-      const filteredPodcasts = podcasts.slice(0, 3);
-      const filteredTweets = tweets.slice(0, 5);
-      const filteredBlogs = blogs.slice(0, 3);
-
-      if (offset < -365) {
-        return { podcasts: [], tweets: [], blogs: [], isEmpty: true };
-      }
-
-      return {
-        podcasts: filteredPodcasts,
-        tweets: filteredTweets,
-        blogs: filteredBlogs,
-        isEmpty: false,
-        date: targetDate
-      };
-    }
-
-    // Filter data by custom date
-    function filterDataByCustomDate(podcasts, tweets, blogs, targetDate) {
-      const filteredPodcasts = podcasts.slice(0, 3);
-      const filteredTweets = tweets.slice(0, 5);
-      const filteredBlogs = blogs.slice(0, 3);
-
-      return {
-        podcasts: filteredPodcasts,
-        tweets: filteredTweets,
-        blogs: filteredBlogs,
-        isEmpty: false,
-        date: targetDate
-      };
     }
 
     // Update date display
@@ -827,7 +747,6 @@
       display.textContent = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', options);
     }
 
-    // Update date display for custom date
     function updateDateDisplayForCustomDate(date) {
       const display = document.getElementById('currentDateDisplay');
 
@@ -842,42 +761,14 @@
     }
 
     // Render content
-    function renderContent(data) {
-      renderPodcasts(data.podcasts, data.date);
-      renderTweets(data.tweets, data.date);
-      renderBlogs(data.blogs, data.date);
+    async function renderContent(date) {
+      const data = await loadData();
+
+      renderPodcasts(data.podcasts, date);
+      renderTweets(data.tweets, date);
+      renderBlogs(data.blogs, date);
     }
 
-    // Show no data message
-    function showNoDataMessage(offset) {
-      const content = document.getElementById('content');
-      const container = document.getElementById('podcasts-content');
-
-      if (offset < -365) {
-        container.innerHTML = `<div style="text-align: center; padding: 40px; color: #86868b; font-size: 17px;">${translations[currentLanguage]['no-data']}</div>`;
-      } else {
-        container.innerHTML = `<div style="text-align: center; padding: 40px; color: #86868b; font-size: 17px;">${translations[currentLanguage]['no-data']}</div>`;
-      }
-    }
-
-    // Show no data message for custom date
-    function showNoDataForCustomDate(date) {
-      const content = document.getElementById('content');
-      const container = document.getElementById('podcasts-content');
-
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-      };
-
-      const dateStr = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', options);
-      const message = translations[currentLanguage]['no-data-custom'].replace('{date}', dateStr);
-      container.innerHTML = `<div style="text-align: center; padding: 40px; color: #86868b; font-size: 17px;">${message}</div>`;
-    }
-
-    // Render podcasts
     function renderPodcasts(podcasts, date) {
       const container = document.getElementById('podcasts-content');
       container.innerHTML = podcasts.map(podcast => `
@@ -890,7 +781,6 @@
       `).join('');
     }
 
-    // Render tweets
     function renderTweets(tweets, date) {
       const container = document.getElementById('tweets-content');
       container.innerHTML = tweets.map(tweet => `
@@ -903,7 +793,6 @@
       `).join('');
     }
 
-    // Render blogs
     function renderBlogs(blogs, date) {
       const container = document.getElementById('blogs-content');
       container.innerHTML = blogs.map(blog => `
@@ -916,34 +805,30 @@
       `).join('');
     }
 
-    // Load today's data on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize language
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
       switchLanguage(currentLanguage);
 
-      // Initialize date input to today
       const dateInput = document.getElementById('customDateInput');
       const today = new Date();
+      selectedDate = today;
+
       const year = today.getFullYear();
       const month = String(today.getMonth() + 1).padStart(2, '0');
       const day = String(today.getDate()).padStart(2, '0');
       dateInput.value = `${year}-${month}-${day}`;
 
-      // Add event listener for date input change
-      dateInput.addEventListener('change', () => {
+      updateDateDisplayForCustomDate(today);
+      await renderContent(today);
+
+      dateInput.addEventListener('change', async () => {
         if (dateInput.value) {
-          loadDataByCustomDate();
+          selectedDate = new Date(dateInput.value);
+          updateDateDisplayForCustomDate(selectedDate);
+          await renderContent(selectedDate);
         }
       });
-
-      // Load data
-      loadDataByOffset(0);
     });
-
-    // Auto-refresh every 30 minutes
-    setInterval(() => {
-      loadDataByOffset(currentOffset);
-    }, 30 * 60 * 1000);
   </script>
 </body>
 </html>
