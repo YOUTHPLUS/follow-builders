@@ -1,1059 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Follow builders, not influencers - Track top AI builders, researchers, founders, PMs, and engineers">
-  <title>Follow Builders, Not Influencers</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-      background: #000000;
-      color: #f5f5f7;
-      line-height: 1.5;
-      font-size: 17px;
-      letter-spacing: -0.022em;
-      font-weight: 400;
-    }
-
-    .container {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 0 22px;
-    }
-
-    /* Apple-style navigation */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      z-index: 9999;
-    }
-
-    .nav-content {
-      max-width: 980px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 22px;
-      height: 48px;
-    }
-
-    .nav-logo {
-      font-size: 17px;
-      font-weight: 600;
-      color: #f5f5f7;
-      letter-spacing: -0.022em;
-    }
-
-    .lang-switch {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .lang-btn {
-      background: transparent;
-      border: none;
-      color: #86868b;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      padding: 4px 8px;
-      transition: color 0.3s;
-      font-family: inherit;
-    }
-
-    .lang-btn:hover {
-      color: #f5f5f7;
-    }
-
-    .lang-btn.active {
-      color: #f5f5f7;
-      font-weight: 600;
-    }
-
-    .lang-divider {
-      color: #424245;
-      font-size: 13px;
-    }
-
-    /* Apple-style hero section */
-    .hero {
-      padding: 60px 0;
-      text-align: center;
-      margin-top: 48px;
-    }
-
-    .hero h1 {
-      font-size: 48px;
-      line-height: 1.08333;
-      font-weight: 600;
-      letter-spacing: -0.005em;
-      margin-bottom: 6px;
-    }
-
-    .hero h1 .gradient {
-      background: linear-gradient(90deg, #b2a2ff 0%, #ff6b6b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero p {
-      font-size: 24px;
-      line-height: 1.16667;
-      letter-spacing: 0.004em;
-      color: #86868b;
-      margin-bottom: 30px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Date selector */
-    .date-selector {
-      background: #1d1d1f;
-      border-radius: 14px;
-      padding: 10px 16px;
-      margin: 16px auto;
-      max-width: 350px;
-    }
-
-    .date-selector h3 {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      letter-spacing: -0.022em;
-      color: #86868b;
-    }
-
-    .date-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .date-nav-btn {
-      background: transparent;
-      border: none;
-      color: #2997ff;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s;
-      padding: 0;
-      letter-spacing: -0.022em;
-    }
-
-    .date-nav-btn:hover {
-      color: #147ce5;
-      text-decoration: underline;
-    }
-
-    .date-nav-btn:active {
-      color: #0a5cb5;
-    }
-
-    .date-nav input[type="date"] {
-      flex: 1;
-      padding: 8px 12px;
-      background: #000000;
-      border: 1px solid #424245;
-      border-radius: 980px;
-      color: #f5f5f7;
-      font-size: 14px;
-      font-family: inherit;
-      transition: border-color 0.3s;
-      min-width: 140px;
-      text-align: center;
-    }
-
-    .date-nav input[type="date"]:focus {
-      outline: none;
-      border-color: #2997ff;
-    }
-
-    .date-nav input[type="date"]::-webkit-calendar-picker-indicator {
-      cursor: pointer;
-      filter: invert(1);
-      opacity: 0.6;
-      padding: 4px;
-    }
-
-    .date-nav input[type="date"]::-webkit-calendar-picker-indicator:hover {
-      opacity: 1;
-    }
-
-    .current-date {
-      text-align: center;
-      margin: 15px 0;
-      font-size: 14px;
-      color: #86868b;
-      letter-spacing: -0.022em;
-    }
-
-    .current-date strong {
-      color: #f5f5f7;
-    }
-
-    /* Content sections */
-    .content {
-      padding: 60px 0;
-    }
-
-    .section {
-      margin-bottom: 80px;
-    }
-
-    .section-title {
-      font-size: 40px;
-      line-height: 1.1;
-      font-weight: 600;
-      letter-spacing: -0.003em;
-      margin-bottom: 30px;
-    }
-
-    .content-item {
-      background: #1d1d1f;
-      border-radius: 18px;
-      padding: 30px;
-      margin-bottom: 20px;
-      transition: transform 0.3s;
-    }
-
-    .content-item:hover {
-      transform: scale(1.01);
-    }
-
-    .item-date {
-      font-size: 14px;
-      color: #86868b;
-      margin-bottom: 12px;
-      letter-spacing: -0.022em;
-    }
-
-    .item-title {
-      font-size: 21px;
-      line-height: 1.19048;
-      font-weight: 600;
-      margin-bottom: 10px;
-      letter-spacing: -0.022em;
-    }
-
-    .item-content {
-      font-size: 17px;
-      line-height: 1.52941;
-      color: #86868b;
-      margin-bottom: 15px;
-      letter-spacing: -0.022em;
-    }
-
-    .item-link {
-      display: inline-block;
-      padding: 12px 24px;
-      background: #2997ff;
-      border: none;
-      border-radius: 980px;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      transition: all 0.3s;
-      letter-spacing: -0.022em;
-      cursor: pointer;
-    }
-
-    .item-link:hover {
-      background: #147ce5;
-      transform: scale(1.02);
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 10000;
-      overflow-y: auto;
-    }
-
-    .modal.active {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 48px 22px;
-    }
-
-    .modal-content {
-      background: #1d1d1f;
-      border-radius: 18px;
-      padding: 40px;
-      max-width: 700px;
-      width: 100%;
-      position: relative;
-      margin-top: 48px;
-      animation: modalSlideIn 0.3s ease-out;
-    }
-
-    @keyframes modalSlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: transparent;
-      border: none;
-      color: #86868b;
-      font-size: 32px;
-      cursor: pointer;
-      padding: 8px;
-      transition: color 0.3s;
-      line-height: 1;
-    }
-
-    .modal-close:hover {
-      color: #f5f5f7;
-    }
-
-    .modal-header {
-      margin-bottom: 24px;
-    }
-
-    .modal-title {
-      font-size: 32px;
-      line-height: 1.25;
-      font-weight: 600;
-      letter-spacing: -0.005em;
-      margin-bottom: 12px;
-    }
-
-    .modal-meta {
-      font-size: 14px;
-      color: #86868b;
-      letter-spacing: -0.022em;
-    }
-
-    .modal-body {
-      font-size: 17px;
-      line-height: 1.52941;
-      color: #f5f5f7;
-      letter-spacing: -0.022em;
-      margin-bottom: 24px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-
-    .modal-footer {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px solid #2d2d2f;
-    }
-
-    .modal-link {
-      display: inline-block;
-      padding: 12px 24px;
-      background: #2997ff;
-      border: none;
-      border-radius: 980px;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      transition: all 0.3s;
-      letter-spacing: -0.022em;
-    }
-
-    .modal-link:hover {
-      background: #147ce5;
-    }
-
-    /* Footer */
-    .footer {
-      background: transparent;
-      padding: 20px 0;
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .footer p {
-      font-size: 12px;
-      color: #86868b;
-      margin: 0;
-      letter-spacing: -0.022em;
-    }
-
-    .footer a {
-      color: #2997ff;
-      text-decoration: none;
-      transition: opacity 0.3s;
-    }
-
-    .footer a:hover {
-      opacity: 0.7;
-    }
-
-    /* Responsive design - Mobile first */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 16px;
-      }
-
-      .lang-switch {
-        gap: 4px;
-      }
-
-      .lang-btn {
-        padding: 3px 6px;
-        font-size: 12px;
-      }
-
-      .lang-divider {
-        font-size: 12px;
-      }
-
-      .hero h1 {
-        font-size: 40px;
-        line-height: 1.1;
-      }
-
-      .hero p {
-        font-size: 19px;
-        line-height: 1.42105;
-      }
-
-      .date-selector {
-        padding: 8px 12px;
-        margin: 12px auto;
-        max-width: 100%;
-      }
-
-      .date-selector h3 {
-        font-size: 12px;
-        margin-bottom: 6px;
-      }
-
-      .date-nav {
-        gap: 6px;
-        margin-bottom: 8px;
-      }
-
-      .date-nav-btn {
-        font-size: 13px;
-      }
-
-      .date-nav input[type="date"] {
-        padding: 6px 10px;
-        font-size: 13px;
-        min-width: 120px;
-      }
-
-      .current-date {
-        margin: 12px 0;
-        font-size: 13px;
-      }
-
-      .section-title {
-        font-size: 32px;
-        line-height: 1.125;
-      }
-
-      .content {
-        padding: 24px 0;
-      }
-
-      .content-item {
-        padding: 16px;
-        margin-bottom: 12px;
-        border-radius: 12px;
-      }
-
-      .item-title {
-        font-size: 19px;
-        line-height: 1.26316;
-      }
-
-      .item-content {
-        font-size: 16px;
-        line-height: 1.625;
-      }
-
-      .modal.active {
-        padding: 24px 16px;
-      }
-
-      .modal-content {
-        padding: 24px;
-        margin-top: 24px;
-      }
-
-      .modal-title {
-        font-size: 24px;
-      }
-
-      .modal-body {
-        font-size: 16px;
-        line-height: 1.625;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 12px;
-      }
-
-      .nav-logo {
-        font-size: 15px;
-      }
-
-      .lang-switch {
-        gap: 3px;
-      }
-
-      .lang-btn {
-        padding: 2px 5px;
-        font-size: 11px;
-      }
-
-      .lang-divider {
-        font-size: 11px;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-        line-height: 1.125;
-      }
-
-      .hero p {
-        font-size: 17px;
-        line-height: 1.58824;
-      }
-
-      .date-selector {
-        padding: 6px 10px;
-        margin: 10px auto;
-      }
-
-      .date-selector h3 {
-        font-size: 11px;
-        margin-bottom: 4px;
-      }
-
-      .date-nav {
-        gap: 4px;
-        margin-bottom: 6px;
-      }
-
-      .date-nav-btn {
-        font-size: 12px;
-      }
-
-      .date-nav input[type="date"] {
-        padding: 5px 8px;
-        font-size: 12px;
-        min-width: 100px;
-      }
-
-      .current-date {
-        margin: 10px 0;
-        font-size: 12px;
-      }
-
-      .section-title {
-        font-size: 28px;
-        line-height: 1.28571;
-      }
-
-      .modal.active {
-        padding: 16px 12px;
-      }
-
-      .modal-content {
-        padding: 20px;
-        margin-top: 16px;
-      }
-
-      .modal-title {
-        font-size: 20px;
-      }
-
-      .modal-body {
-        font-size: 15px;
-        line-height: 1.6;
-      }
-
-      .modal-footer {
-        flex-direction: column;
-      }
-
-      .modal-link {
-        width: 100%;
-        text-align: center;
-      }
-    }
-
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #000000;
-        color: #f5f5f7;
-      }
-    }
-
-    /* Print styles */
-    @media print {
-      .nav,
-      .date-selector,
-      .modal {
-        display: none;
-      }
-
-      .hero {
-        padding: 40px 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Builders Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 40px;
+            text-align: center;
+            background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 17px;
+            color: #6e6e73;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f5f5f7;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1d1d1f;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle:hover {
+            background: #e5e5e5;
+        }
+
+        .date-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            background: #f5f5f7;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .date-btn {
+            background: none;
+            border: none;
+            color: #0066cc;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: all 0.2s ease;
+        }
+
+        .date-btn:hover {
+            text-decoration: underline;
+        }
+
+        .date-btn:active {
+            color: #004499;
+        }
+
+        .date-input {
+            background: white;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #1d1d1f;
+            min-width: 140px;
+            cursor: pointer;
+        }
+
+        .date-input:focus {
+            outline: none;
+            border-color: #0066cc;
+        }
+
+        .content {
+            padding: 20px 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+            letter-spacing: -0.2px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            margin-right: 12px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .card-time {
+            font-size: 12px;
+            color: #6e6e73;
+            margin-top: 2px;
+        }
+
+        .card-content {
+            font-size: 14px;
+            color: #1d1d1f;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .card-type {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 12px;
+        }
+
+        .card-type.twitter {
+            background: rgba(29, 161, 242, 0.1);
+            color: #1da1f2;
+        }
+
+        .card-type.blog {
+            background: rgba(52, 211, 153, 0.1);
+            color: #34d399;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6e6e73;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #ff3b30;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6e6e73;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #e5e5e5;
+            color: #6e6e73;
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header p {
+                font-size: 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .date-controls {
+                padding: 16px;
+            }
+
+            .date-input {
+                min-width: 120px;
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav-content">
-      <div class="nav-logo" data-i18n="logo">Follow Builders</div>
-      <div class="lang-switch">
-        <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">EN</button>
-        <span class="lang-divider">|</span>
-        <button class="lang-btn" data-lang="zh" onclick="switchLanguage('zh')">中文</button>
-      </div>
-    </div>
-  </nav>
+    <div class="container">
+        <button class="language-toggle" onclick="switchLanguage()">English</button>
 
-  <div class="container">
-    <!-- Hero Section -->
-    <section class="hero">
-      <h1 data-i18n="hero-title">Follow <span class="gradient">Builders</span><br>Not Influencers</h1>
-      <p data-i18n="hero-desc">Track top AI builders, researchers, founders, PMs, and engineers who are actually building products.</p>
-    </section>
-
-    <!-- Date Selector -->
-    <div class="date-selector">
-      <h3 data-i18n="select-date">Select Date</h3>
-      <div class="date-nav">
-        <button class="date-nav-btn" onclick="navigateDate(-1)" data-i18n="previous-day">Previous</button>
-        <input type="date" id="customDateInput">
-        <button class="date-nav-btn" onclick="navigateDate(1)" data-i18n="next-day">Next</button>
-      </div>
-      <div class="current-date">
-        <span data-i18n="viewing">Viewing:</span> <strong id="currentDateDisplay">Today</strong>
-      </div>
-    </div>
-
-    <!-- Content -->
-    <div id="content" class="content">
-      <section class="section" id="tweets">
-        <h2 class="section-title" data-i18n="tweets-title">Twitter Updates</h2>
-        <div id="tweets-content"></div>
-      </section>
-
-      <section class="section" id="blogs">
-        <h2 class="section-title" data-i18n="blogs-title">Engineering Blogs</h2>
-        <div id="blogs-content"></div>
-      </section>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>Source: <a href="https://github.com/zarazhangrui/follow-builders" target="_blank">follow-builders project</a></p>
-    </footer>
-  </div>
-
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">&times;</button>
-      <div class="modal-header">
-        <h3 class="modal-title" id="modal-title"></h3>
-        <div class="modal-meta" id="modal-meta"></div>
-      </div>
-      <div class="modal-body" id="modal-body"></div>
-      <div class="modal-footer" id="modal-footer"></div>
-    </div>
-  </div>
-
-  <script>
-    // Default data (fallback in case JSON files don't exist)
-    const defaultData = {
-      tweets: [
-        {
-          name: "AI Expert",
-          handle: "@aiexpert",
-          text: "Just shipped a new AI feature that improves accuracy by 30%. #AI #MachineLearning This is a long tweet that spans multiple lines to demonstrate how the modal will display longer content properly without any issues or overflow problems.",
-          url: "https://twitter.com/aiexpert/status/1",
-          date: "2026-04-21"
-        },
-        {
-          name: "ML Researcher",
-          handle: "@mlresearcher",
-          text: "New paper on transformer models is now available on arXiv. Key findings:\n\n1. Improved attention mechanism\n2. Better scaling laws\n3. Novel architecture\n\nCheck it out!",
-          url: "https://twitter.com/mlresearcher/status/2",
-          date: "2026-04-21"
-        },
-        {
-          name: "Data Scientist",
-          handle: "@datascientist",
-          text: "Working on optimizing data pipelines for better performance. Achieved 2x speedup with new indexing strategy.",
-          url: "https://twitter.com/datascientist/status/3",
-          date: "2026-04-21"
-        },
-        {
-          name: "AI Engineer",
-          handle: "@aiengineer",
-          text: "Excited to share our latest AI model benchmarks! Our new architecture achieves state-of-the-art results on 5 benchmarks.",
-          url: "https://twitter.com/aiengineer/status/4",
-          date: "2026-04-21"
-        },
-        {
-          name: "Tech Founder",
-          handle: "@techfounder",
-          text: "Building next generation of AI-powered tools. Join us in shaping the future of productivity!",
-          url: "https://twitter.com/techfounder/status/5",
-          date: "2026-04-21"
-        }
-      ],
-      blogs: [
-        {
-          title: "The Future of AI in 2024",
-          description: "Comprehensive analysis of AI trends and predictions for the coming year.",
-          content: "As we look ahead to 2024, several key trends are emerging in the AI landscape:\n\n**1. Multimodal AI**\nModels that understand text, images, audio, and video simultaneously are becoming more capable and accessible.\n\n**2. Edge AI**\nRunning AI models on-device is improving privacy and reducing latency for mobile applications.\n\n**3. AI Safety**\nGrowing focus on making AI systems more aligned with human values and reducing harmful outputs.\n\n**4. Democratization**\nBetter tools and APIs are making it easier for developers to integrate AI into their products.\n\n**5. Specialized Models**\nInstead of general-purpose models, we're seeing more models optimized for specific tasks like coding, medical diagnosis, or legal research.\n\nThe pace of innovation shows no sign of slowing down, and 2024 promises to be an exciting year for AI.",
-          url: "https://example.com/blog1",
-          author: "Dr. Sarah Chen",
-          published: "2026-04-21"
-        },
-        {
-          title: "Building Scalable AI Systems",
-          description: "Best practices for deploying AI models at scale in production.",
-          content: "Deploying AI at scale requires careful consideration of several factors:\n\n**Infrastructure**\n- Use GPU clusters with proper scaling\n- Implement model serving frameworks like TensorFlow Serving or TorchServe\n- Monitor GPU utilization and response times\n\n**Data Pipelines**\n- Build robust data ingestion systems\n- Implement data validation and quality checks\n- Use streaming data processing for real-time updates\n\n**Monitoring**\n- Track model performance metrics\n- Set up alerts for degradation\n- Monitor data drift and model drift\n- Log predictions for debugging\n\n**Reliability**\n- Implement retry logic for failed requests\n- Use load balancing and auto-scaling\n- Have fallback models ready\n- Design for graceful degradation\n\n**Cost Optimization**\n- Use model quantization\n- Implement batch inference when possible\n- Cache frequently requested results\n- Consider using smaller models for less critical tasks\n\nBy following these practices, you can build AI systems that are reliable, scalable, and cost-effective.",
-          url: "https://example.com/blog2",
-          author: "Engineering Team",
-          published: "2026-04-21"
-        },
-        {
-          title: "Understanding Neural Networks",
-          description: "A beginner-friendly guide to understanding how neural networks work.",
-          content: "Neural networks are the foundation of modern AI, but they can seem mysterious at first. Let's break down the basics:\n\n**What is a Neural Network?**\nA neural network is a computational model inspired by the human brain. It consists of:\n- **Input Layer**: Receives the initial data\n- **Hidden Layers**: Processes the data through multiple transformations\n- **Output Layer**: Produces the final prediction or classification\n\n**How Do They Learn?**\nNeural networks learn through a process called training:\n\n1. **Forward Pass**: Input data flows through the network\n2. **Loss Calculation**: Compare the output to the correct answer\n3. **Backward Pass**: Adjust weights to reduce the error\n4. **Repeat**: Continue this process millions of times\n\n**Key Components**\n\n**Neurons**: Individual processing units that:\n- Receive inputs from other neurons\n- Apply weights to each input\n- Sum the weighted inputs\n- Pass the result through an activation function\n- Send the output to the next layer\n\n**Activation Functions**: Mathematical functions that introduce non-linearity, allowing the network to learn complex patterns. Common ones include:\n- ReLU: f(x) = max(0, x)\n- Sigmoid: f(x) = 1/(1 + e^(-x))\n- Tanh: f(x) = (e^x - e^(-x))/(e^x + e^(-x))\n\n**Weights**: Numbers that determine how much influence each input has. These are what get adjusted during training.\n\n**Training Process**\nThe network learns by gradually adjusting its weights:\n\n1. Start with random weights\n2. Make predictions on training data\n3. Calculate how wrong the predictions are (loss)\n4. Calculate gradients (how much each weight contributed to the error)\n5. Update weights slightly in the direction that reduces error\n6. Repeat until the loss stops decreasing\n\n**Common Architectures**\n\n- **Feedforward**: Data flows in one direction\n- **CNN (Convolutional Neural Networks)**: Good for images\n- **RNN (Recurrent Neural Networks)**: Good for sequences\n- **Transformer**: Good for text and language\n\n**Why Do They Work?**\nThe key insight is that by stacking many layers and allowing them to learn, the network can discover hierarchical features:\n\n- Early layers: Simple patterns (edges, colors)\n- Middle layers: Complex patterns (shapes, objects)\n- Late layers: Abstract concepts (objects, scenes)\n\nThis hierarchical representation allows neural networks to learn representations of data that are much more powerful than traditional machine learning approaches.\n\n**Getting Started**\nTo start working with neural networks:\n1. Learn Python programming\n2. Study linear algebra and calculus\n3. Experiment with frameworks like PyTorch or TensorFlow\n4. Start with simple datasets and architectures\n5. Gradually move to more complex problems\n\nNeural networks may seem complex, but understanding the fundamentals will give you a solid foundation for exploring more advanced topics in AI.",
-          url: "https://example.com/blog3",
-          author: "AI Research Lab",
-          published: "2026-04-21"
-        }
-      ]
-    };
-
-    // GitHub data source URLs
-    const TWEETS_URL = './feed-x.json';
-    const BLOGS_URL = './feed-blogs.json';
-
-    let currentOffset = 0;
-    let selectedDate = null;
-
-    // Language translations
-    const translations = {
-      en: {
-        'logo': 'Follow Builders',
-        'hero-title': 'Follow <span class="gradient">Builders</span><br>Not Influencers',
-        'hero-desc': 'Track top AI builders, researchers, founders, PMs, and engineers who are actually building products.',
-        'select-date': 'Select Date',
-        'previous-day': 'Previous',
-        'next-day': 'Next',
-        'viewing': 'Viewing:',
-        'tweets-title': 'Twitter Updates',
-        'blogs-title': 'Engineering Blogs',
-        'view-tweet': 'View Tweet',
-        'read-more': 'Read More',
-        'close': 'Close',
-        'view-full': 'View Full Tweet',
-        'view-original': 'View Original Post'
-      },
-      zh: {
-        'logo': '关注构建者',
-        'hero-title': '关注<span class="gradient">构建者</span><br>而非影响者',
-        'hero-desc': '追踪真正在构建产品的顶级AI构建者、研究员、创始人、产品经理和工程师。',
-        'select-date': '选择日期',
-        'previous-day': '前一天',
-        'next-day': '后一天',
-        'viewing': '查看：',
-        'tweets-title': 'Twitter更新',
-        'blogs-title': '工程博客',
-        'view-tweet': '查看推文',
-        'read-more': '阅读更多',
-        'close': '关闭',
-        'view-full': '查看完整推文',
-        'view-original': '查看原文'
-      }
-    };
-
-    let currentLanguage = localStorage.getItem('language') || 'en';
-
-    // Switch language function
-    function switchLanguage(lang) {
-      currentLanguage = lang;
-      localStorage.setItem('language', lang);
-
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.lang === lang) {
-          btn.classList.add('active');
-        }
-      });
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-          el.innerHTML = translations[lang][key];
-        }
-      });
-
-      if (selectedDate) {
-        updateDateDisplayForCustomDate(selectedDate);
-      } else {
-        updateDateDisplay(currentOffset);
-      }
-
-      if (selectedDate) {
-        renderContent(selectedDate);
-      }
-    }
-
-    // Navigate date function
-    function navigateDate(days) {
-      const dateInput = document.getElementById('customDateInput');
-      let date;
-
-      if (dateInput.value) {
-        date = new Date(dateInput.value);
-      } else {
-        date = new Date();
-      }
-
-      date.setDate(date.getDate() + days);
-      selectedDate = date;
-
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
-
-      dateInput.value = formattedDate;
-      updateDateDisplayForCustomDate(date);
-      renderContent(date);
-    }
-
-    // Load data from JSON files with fallback
-    async function loadData() {
-      try {
-        const [tweets, blogs] = await Promise.all([
-          fetch(TWEETS_URL).then(res => {
-            if (!res.ok) throw new Error('Tweets file not found');
-            return res.json();
-          }),
-          fetch(BLOGS_URL).then(res => {
-            if (!res.ok) throw new Error('Blogs file not found');
-            return res.json();
-          })
-        ]);
-
-        return { tweets, blogs };
-      } catch (error) {
-        console.log('Using default data:', error);
-        return defaultData;
-      }
-    }
-
-    // Update date display
-    function updateDateDisplay(offset) {
-      const display = document.getElementById('currentDateDisplay');
-      const date = new Date();
-      date.setDate(date.getDate() + offset);
-
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-      };
-
-      display.textContent = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', options);
-    }
-
-    function updateDateDisplayForCustomDate(date) {
-      const display = document.getElementById('currentDateDisplay');
-
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-      };
-
-      display.textContent = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', options);
-    }
-
-    // Render content
-    async function renderContent(date) {
-      const data = await loadData();
-
-      // 确保数据是数组
-      const tweets = Array.isArray(data.tweets) ? data.tweets : defaultData.tweets;
-      const blogs = Array.isArray(data.blogs) ? data.blogs : defaultData.blogs;
-
-      renderTweets(tweets, date);
-      renderBlogs(blogs, date);
-    }
-
-    function renderTweets(tweets, date) {
-      const container = document.getElementById('tweets-content');
-      if (!Array.isArray(tweets)) {
-        container.innerHTML = '<div class="content-item"><p>No tweets available</p></div>';
-        return;
-      }
-      container.innerHTML = tweets.map((tweet, index) => `
-        <div class="content-item">
-          <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-          <div class="item-title">${tweet.name || tweet.handle || 'Unknown User'}</div>
-          <div class="item-content">${tweet.text || tweet.content || 'No content available'}</div>
-          <button class="item-link" onclick="openModal('tweet', ${index})">${translations[currentLanguage]['view-tweet']}</button>
+        <div class="header">
+            <h1 id="mainTitle">AI Builders Tracker</h1>
+            <p id="subtitle">Track AI builders' latest content and insights</p>
         </div>
-      `).join('');
-    }
 
-    function renderBlogs(blogs, date) {
-      const container = document.getElementById('blogs-content');
-      if (!Array.isArray(blogs)) {
-        container.innerHTML = '<div class="content-item"><p>No blogs available</p></div>';
-        return;
-      }
-      container.innerHTML = blogs.map((blog, index) => `
-        <div class="content-item">
-          <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-          <div class="item-title">${blog.title || blog.name || 'Untitled'}</div>
-          <div class="item-content">${blog.description || blog.summary || 'No description available'}</div>
-          <button class="item-link" onclick="openModal('blog', ${index})">${translations[currentLanguage]['read-more']}</button>
+        <div class="date-controls">
+            <button class="date-btn" onclick="changeDate(-1)" id="prevDay">Previous Day</button>
+            <input type="date" class="date-input" id="datePicker" onchange="handleDateChange()">
+            <button class="date-btn" onclick="changeDate(1)" id="nextDay">Next Day</button>
         </div>
-      `).join('');
-    }
 
-    // Modal functions
-    let currentData = null;
+        <div class="content" id="content">
+            <div class="loading" id="loading">Loading...</div>
+        </div>
 
-    function openModal(type, index) {
-      const data = currentData || defaultData;
-      const items = type === 'tweet' ? data.tweets : data.blogs;
-      const item = items[index];
+        <div class="footer">
+            <a href="https://github.com/zarazhangrui/follow-builders" target="_blank">Source</a>
+        </div>
+    </div>
 
-      if (!item) return;
+    <script>
+        // State management
+        let selectedDate = new Date();
+        let currentLang = 'en';
+        let twitterData = [];
+        let blogData = [];
 
-      const modal = document.getElementById('modal');
-      const modalTitle = document.getElementById('modal-title');
-      const modalMeta = document.getElementById('modal-meta');
-      const modalBody = document.getElementById('modal-body');
-      const modalFooter = document.getElementById('modal-footer');
+        // Language texts
+        const translations = {
+            en: {
+                mainTitle: 'AI Builders Tracker',
+                subtitle: "Track AI builders' latest content and insights",
+                prevDay: 'Previous Day',
+                nextDay: 'Next Day',
+                twitterSection: 'Twitter',
+                blogSection: 'Blogs',
+                loading: 'Loading...',
+                error: 'Failed to load data. Please try again.',
+                noData: 'No content found for this date.',
+                langBtn: '中文'
+            },
+            zh: {
+                mainTitle: 'AI构建者追踪',
+                subtitle: '追踪AI构建者的最新内容和见解',
+                prevDay: '前一天',
+                nextDay: '后一天',
+                twitterSection: 'Twitter',
+                blogSection: '博客',
+                loading: '加载中...',
+                error: '加载数据失败，请重试。',
+                noData: '该日期没有找到内容。',
+                langBtn: 'English'
+            }
+        };
 
-      if (type === 'tweet') {
-        modalTitle.textContent = item.name || item.handle;
-        modalMeta.textContent = `@${item.handle} • ${item.date || new Date().toLocaleDateString()}`;
-        modalBody.textContent = item.text || item.content || 'No content available';
-        modalFooter.innerHTML = `<a href="${item.url}" target="_blank" class="modal-link">${translations[currentLanguage]['view-full']}</a>`;
-      } else {
-        modalTitle.textContent = item.title || item.name;
-        const authorText = item.author ? `By ${item.author}` : '';
-        const publishedText = item.published ? ` • ${item.published}` : '';
-        modalMeta.textContent = `${authorText}${publishedText}`;
-        modalBody.textContent = item.content || item.description || 'No content available';
-        modalFooter.innerHTML = `<a href="${item.url}" target="_blank" class="modal-link">${translations[currentLanguage]['view-original']}</a>`;
-      }
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved language preference
+            const savedLang = localStorage.getItem('language') || 'en';
+            currentLang = savedLang;
+            updateLanguageUI();
 
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+            // Set initial date to today
+            const today = new Date();
+            selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            document.getElementById('datePicker').value = formatDate(selectedDate);
 
-    function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+            // Load data
+            loadData();
+        });
 
-    // Close modal on outside click
-    document.getElementById('modal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeModal();
-      }
-    });
-
-    // Close modal on Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
-    });
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', async () => {
-      switchLanguage(currentLanguage);
-
-      const dateInput = document.getElementById('customDateInput');
-      const today = new Date();
-      selectedDate = today;
-
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
-      dateInput.value = `${year}-${month}-${day}`;
-
-      updateDateDisplayForCustomDate(today);
-
-      // Load and save data for modal
-      currentData = await loadData();
-
-      await renderContent(today);
-
-      dateInput.addEventListener('change', async () => {
-        if (dateInput.value) {
-          selectedDate = new Date(dateInput.value);
-          updateDateDisplayForCustomDate(selectedDate);
-          currentData = await loadData();
-          await renderContent(selectedDate);
+        // Language switching
+        function switchLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            localStorage.setItem('language', currentLang);
+            updateLanguageUI();
+            renderContent();
         }
-      });
-    });
-  </script>
+
+        function updateLanguageUI() {
+            const t = translations[currentLang];
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('subtitle').textContent = t.subtitle;
+            document.getElementById('prevDay').textContent = t.prevDay;
+            document.getElementById('nextDay').textContent = t.nextDay;
+            document.querySelector('.language-toggle').textContent = t.langBtn;
+        }
+
+        // Date handling
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function changeDate(delta) {
+            selectedDate.setDate(selectedDate.getDate() + delta);
+            document.getElementById('datePicker').value = formatDate(selectedDate);
+            loadData();
+        }
+
+        function handleDateChange() {
+            const inputDate = document.getElementById('datePicker').value;
+            if (inputDate) {
+                selectedDate = new Date(inputDate);
+                loadData();
+            }
+        }
+
+        // Data loading
+        async function loadData() {
+            const contentDiv = document.getElementById('content');
+            const t = translations[currentLang];
+
+            contentDiv.innerHTML = `<div class="loading">${t.loading}</div>`;
+
+            const dateStr = formatDate(selectedDate);
+
+            try {
+                // Load Twitter data
+                const twitterResponse = await fetch(`./feed-x.json`);
+                twitterData = twitterResponse.ok ? await twitterResponse.json() : [];
+
+                // Load blog data
+                const blogResponse = await fetch(`./feed-blogs.json`);
+                blogData = blogResponse.ok ? await blogResponse.json() : [];
+
+                renderContent();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                contentDiv.innerHTML = `<div class="error">${t.error}</div>`;
+            }
+        }
+
+        function filterDataByDate(data) {
+            if (!Array.isArray(data)) return [];
+
+            const dateStr = formatDate(selectedDate);
+            return data.filter(item => {
+                const itemDate = new Date(item.date);
+                return formatDate(itemDate) === dateStr;
+            });
+        }
+
+        function renderContent() {
+            const contentDiv = document.getElementById('content');
+            const t = translations[currentLang];
+
+            const filteredTwitter = filterDataByDate(twitterData);
+            const filteredBlogs = filterDataByDate(blogData);
+
+            if (filteredTwitter.length === 0 && filteredBlogs.length === 0) {
+                contentDiv.innerHTML = `<div class="no-data">${t.noData}</div>`;
+                return;
+            }
+
+            let html = '';
+
+            // Render Twitter section
+            if (filteredTwitter.length > 0) {
+                html += `<div class="section">
+                    <h2 class="section-title">${t.twitterSection}</h2>
+                    <div class="card-grid">`;
+                filteredTwitter.forEach(tweet => {
+                    html += renderCard(tweet, 'twitter');
+                });
+                html += `</div></div>`;
+            }
+
+            // Render Blogs section
+            if (filteredBlogs.length > 0) {
+                html += `<div class="section">
+                    <h2 class="section-title">${t.blogSection}</h2>
+                    <div class="card-grid">`;
+                filteredBlogs.forEach(blog => {
+                    html += renderCard(blog, 'blog');
+                });
+                html += `</div></div>`;
+            }
+
+            contentDiv.innerHTML = html;
+        }
+
+        function renderCard(item, type) {
+            const t = translations[currentLang];
+            const authorInitial = item.author ? item.author.charAt(0).toUpperCase() : 'U';
+            const content = item.content || item.text || '';
+
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-avatar">${authorInitial}</div>
+                        <div>
+                            <div class="card-title">${item.author || 'Unknown'}</div>
+                            <div class="card-time">${formatDateTime(item.date)}</div>
+                        </div>
+                    </div>
+                    <div class="card-content">${content}</div>
+                    <span class="card-type ${type}">${type.toUpperCase()}</span>
+                </div>
+            `;
+        }
+
+        function formatDateTime(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+    </script>
 </body>
 </html>
