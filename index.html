@@ -679,7 +679,10 @@
         updateDateDisplay(currentOffset);
       }
 
-      renderContent(currentDate || new Date());
+      // 修复：使用 selectedDate 而不是 currentDate
+      if (selectedDate) {
+        renderContent(selectedDate);
+      }
     }
 
     // Navigate date function
@@ -764,13 +767,22 @@
     async function renderContent(date) {
       const data = await loadData();
 
-      renderPodcasts(data.podcasts, date);
-      renderTweets(data.tweets, date);
-      renderBlogs(data.blogs, date);
+      // 确保数据是数组
+      const podcasts = Array.isArray(data.podcasts) ? data.podcasts : defaultData.podcasts;
+      const tweets = Array.isArray(data.tweets) ? data.tweets : defaultData.tweets;
+      const blogs = Array.isArray(data.blogs) ? data.blogs : defaultData.blogs;
+
+      renderPodcasts(podcasts, date);
+      renderTweets(tweets, date);
+      renderBlogs(blogs, date);
     }
 
     function renderPodcasts(podcasts, date) {
       const container = document.getElementById('podcasts-content');
+      if (!Array.isArray(podcasts)) {
+        container.innerHTML = '<div class="content-item"><p>No podcasts available</p></div>';
+        return;
+      }
       container.innerHTML = podcasts.map(podcast => `
         <div class="content-item">
           <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
@@ -783,6 +795,10 @@
 
     function renderTweets(tweets, date) {
       const container = document.getElementById('tweets-content');
+      if (!Array.isArray(tweets)) {
+        container.innerHTML = '<div class="content-item"><p>No tweets available</p></div>';
+        return;
+      }
       container.innerHTML = tweets.map(tweet => `
         <div class="content-item">
           <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
@@ -795,6 +811,10 @@
 
     function renderBlogs(blogs, date) {
       const container = document.getElementById('blogs-content');
+      if (!Array.isArray(blogs)) {
+        container.innerHTML = '<div class="content-item"><p>No blogs available</p></div>';
+        return;
+      }
       container.innerHTML = blogs.map(blog => `
         <div class="content-item">
           <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
