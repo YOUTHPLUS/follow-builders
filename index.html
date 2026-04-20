@@ -275,11 +275,128 @@
       font-weight: 500;
       transition: all 0.3s;
       letter-spacing: -0.022em;
+      cursor: pointer;
     }
 
     .item-link:hover {
       background: #147ce5;
       transform: scale(1.02);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 10000;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 48px 22px;
+    }
+
+    .modal-content {
+      background: #1d1d1f;
+      border-radius: 18px;
+      padding: 40px;
+      max-width: 700px;
+      width: 100%;
+      position: relative;
+      margin-top: 48px;
+      animation: modalSlideIn 0.3s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: #86868b;
+      font-size: 32px;
+      cursor: pointer;
+      padding: 8px;
+      transition: color 0.3s;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: #f5f5f7;
+    }
+
+    .modal-header {
+      margin-bottom: 24px;
+    }
+
+    .modal-title {
+      font-size: 32px;
+      line-height: 1.25;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      margin-bottom: 12px;
+    }
+
+    .modal-meta {
+      font-size: 14px;
+      color: #86868b;
+      letter-spacing: -0.022em;
+    }
+
+    .modal-body {
+      font-size: 17px;
+      line-height: 1.52941;
+      color: #f5f5f7;
+      letter-spacing: -0.022em;
+      margin-bottom: 24px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #2d2d2f;
+    }
+
+    .modal-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #2997ff;
+      border: none;
+      border-radius: 980px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.3s;
+      letter-spacing: -0.022em;
+    }
+
+    .modal-link:hover {
+      background: #147ce5;
     }
 
     /* Footer */
@@ -391,6 +508,24 @@
         font-size: 16px;
         line-height: 1.625;
       }
+
+      .modal.active {
+        padding: 24px 16px;
+      }
+
+      .modal-content {
+        padding: 24px;
+        margin-top: 24px;
+      }
+
+      .modal-title {
+        font-size: 24px;
+      }
+
+      .modal-body {
+        font-size: 16px;
+        line-height: 1.625;
+      }
     }
 
     @media (max-width: 480px) {
@@ -459,6 +594,33 @@
         font-size: 28px;
         line-height: 1.28571;
       }
+
+      .modal.active {
+        padding: 16px 12px;
+      }
+
+      .modal-content {
+        padding: 20px;
+        margin-top: 16px;
+      }
+
+      .modal-title {
+        font-size: 20px;
+      }
+
+      .modal-body {
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .modal-footer {
+        flex-direction: column;
+      }
+
+      .modal-link {
+        width: 100%;
+        text-align: center;
+      }
     }
 
     /* Dark mode support */
@@ -472,7 +634,8 @@
     /* Print styles */
     @media print {
       .nav,
-      .date-selector {
+      .date-selector,
+      .modal {
         display: none;
       }
 
@@ -517,11 +680,6 @@
 
     <!-- Content -->
     <div id="content" class="content">
-      <section class="section" id="podcasts">
-        <h2 class="section-title" data-i18n="podcasts-title">Podcasts</h2>
-        <div id="podcasts-content"></div>
-      </section>
-
       <section class="section" id="tweets">
         <h2 class="section-title" data-i18n="tweets-title">Twitter Updates</h2>
         <div id="tweets-content"></div>
@@ -539,79 +697,88 @@
     </footer>
   </div>
 
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title"></h3>
+        <div class="modal-meta" id="modal-meta"></div>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
+    </div>
+  </div>
+
   <script>
     // Default data (fallback in case JSON files don't exist)
     const defaultData = {
-      podcasts: [
-        {
-          name: "AI Podcast Episode 1",
-          description: "Discussion about latest AI trends and developments in industry.",
-          url: "https://example.com/podcast1"
-        },
-        {
-          name: "AI Podcast Episode 2",
-          description: "Deep dive into machine learning and neural networks.",
-          url: "https://example.com/podcast2"
-        },
-        {
-          name: "AI Podcast Episode 3",
-          description: "Interview with AI researchers about future of AI.",
-          url: "https://example.com/podcast3"
-        }
-      ],
       tweets: [
         {
           name: "AI Expert",
           handle: "@aiexpert",
-          text: "Just shipped a new AI feature that improves accuracy by 30%. #AI #MachineLearning",
-          url: "https://twitter.com/aiexpert/status/1"
+          text: "Just shipped a new AI feature that improves accuracy by 30%. #AI #MachineLearning This is a long tweet that spans multiple lines to demonstrate how the modal will display longer content properly without any issues or overflow problems.",
+          url: "https://twitter.com/aiexpert/status/1",
+          date: "2026-04-21"
         },
         {
           name: "ML Researcher",
           handle: "@mlresearcher",
-          text: "New paper on transformer models is now available on arXiv.",
-          url: "https://twitter.com/mlresearcher/status/2"
+          text: "New paper on transformer models is now available on arXiv. Key findings:\n\n1. Improved attention mechanism\n2. Better scaling laws\n3. Novel architecture\n\nCheck it out!",
+          url: "https://twitter.com/mlresearcher/status/2",
+          date: "2026-04-21"
         },
         {
           name: "Data Scientist",
           handle: "@datascientist",
-          text: "Working on optimizing data pipelines for better performance.",
-          url: "https://twitter.com/datascientist/status/3"
+          text: "Working on optimizing data pipelines for better performance. Achieved 2x speedup with new indexing strategy.",
+          url: "https://twitter.com/datascientist/status/3",
+          date: "2026-04-21"
         },
         {
           name: "AI Engineer",
           handle: "@aiengineer",
-          text: "Excited to share our latest AI model benchmarks!",
-          url: "https://twitter.com/aiengineer/status/4"
+          text: "Excited to share our latest AI model benchmarks! Our new architecture achieves state-of-the-art results on 5 benchmarks.",
+          url: "https://twitter.com/aiengineer/status/4",
+          date: "2026-04-21"
         },
         {
           name: "Tech Founder",
           handle: "@techfounder",
-          text: "Building next generation of AI-powered tools.",
-          url: "https://twitter.com/techfounder/status/5"
+          text: "Building next generation of AI-powered tools. Join us in shaping the future of productivity!",
+          url: "https://twitter.com/techfounder/status/5",
+          date: "2026-04-21"
         }
       ],
       blogs: [
         {
           title: "The Future of AI in 2024",
-          description: "Comprehensive analysis of AI trends and predictions for coming year.",
-          url: "https://example.com/blog1"
+          description: "Comprehensive analysis of AI trends and predictions for the coming year.",
+          content: "As we look ahead to 2024, several key trends are emerging in the AI landscape:\n\n**1. Multimodal AI**\nModels that understand text, images, audio, and video simultaneously are becoming more capable and accessible.\n\n**2. Edge AI**\nRunning AI models on-device is improving privacy and reducing latency for mobile applications.\n\n**3. AI Safety**\nGrowing focus on making AI systems more aligned with human values and reducing harmful outputs.\n\n**4. Democratization**\nBetter tools and APIs are making it easier for developers to integrate AI into their products.\n\n**5. Specialized Models**\nInstead of general-purpose models, we're seeing more models optimized for specific tasks like coding, medical diagnosis, or legal research.\n\nThe pace of innovation shows no sign of slowing down, and 2024 promises to be an exciting year for AI.",
+          url: "https://example.com/blog1",
+          author: "Dr. Sarah Chen",
+          published: "2026-04-21"
         },
         {
           title: "Building Scalable AI Systems",
           description: "Best practices for deploying AI models at scale in production.",
-          url: "https://example.com/blog2"
+          content: "Deploying AI at scale requires careful consideration of several factors:\n\n**Infrastructure**\n- Use GPU clusters with proper scaling\n- Implement model serving frameworks like TensorFlow Serving or TorchServe\n- Monitor GPU utilization and response times\n\n**Data Pipelines**\n- Build robust data ingestion systems\n- Implement data validation and quality checks\n- Use streaming data processing for real-time updates\n\n**Monitoring**\n- Track model performance metrics\n- Set up alerts for degradation\n- Monitor data drift and model drift\n- Log predictions for debugging\n\n**Reliability**\n- Implement retry logic for failed requests\n- Use load balancing and auto-scaling\n- Have fallback models ready\n- Design for graceful degradation\n\n**Cost Optimization**\n- Use model quantization\n- Implement batch inference when possible\n- Cache frequently requested results\n- Consider using smaller models for less critical tasks\n\nBy following these practices, you can build AI systems that are reliable, scalable, and cost-effective.",
+          url: "https://example.com/blog2",
+          author: "Engineering Team",
+          published: "2026-04-21"
         },
         {
           title: "Understanding Neural Networks",
           description: "A beginner-friendly guide to understanding how neural networks work.",
-          url: "https://example.com/blog3"
+          content: "Neural networks are the foundation of modern AI, but they can seem mysterious at first. Let's break down the basics:\n\n**What is a Neural Network?**\nA neural network is a computational model inspired by the human brain. It consists of:\n- **Input Layer**: Receives the initial data\n- **Hidden Layers**: Processes the data through multiple transformations\n- **Output Layer**: Produces the final prediction or classification\n\n**How Do They Learn?**\nNeural networks learn through a process called training:\n\n1. **Forward Pass**: Input data flows through the network\n2. **Loss Calculation**: Compare the output to the correct answer\n3. **Backward Pass**: Adjust weights to reduce the error\n4. **Repeat**: Continue this process millions of times\n\n**Key Components**\n\n**Neurons**: Individual processing units that:\n- Receive inputs from other neurons\n- Apply weights to each input\n- Sum the weighted inputs\n- Pass the result through an activation function\n- Send the output to the next layer\n\n**Activation Functions**: Mathematical functions that introduce non-linearity, allowing the network to learn complex patterns. Common ones include:\n- ReLU: f(x) = max(0, x)\n- Sigmoid: f(x) = 1/(1 + e^(-x))\n- Tanh: f(x) = (e^x - e^(-x))/(e^x + e^(-x))\n\n**Weights**: Numbers that determine how much influence each input has. These are what get adjusted during training.\n\n**Training Process**\nThe network learns by gradually adjusting its weights:\n\n1. Start with random weights\n2. Make predictions on training data\n3. Calculate how wrong the predictions are (loss)\n4. Calculate gradients (how much each weight contributed to the error)\n5. Update weights slightly in the direction that reduces error\n6. Repeat until the loss stops decreasing\n\n**Common Architectures**\n\n- **Feedforward**: Data flows in one direction\n- **CNN (Convolutional Neural Networks)**: Good for images\n- **RNN (Recurrent Neural Networks)**: Good for sequences\n- **Transformer**: Good for text and language\n\n**Why Do They Work?**\nThe key insight is that by stacking many layers and allowing them to learn, the network can discover hierarchical features:\n\n- Early layers: Simple patterns (edges, colors)\n- Middle layers: Complex patterns (shapes, objects)\n- Late layers: Abstract concepts (objects, scenes)\n\nThis hierarchical representation allows neural networks to learn representations of data that are much more powerful than traditional machine learning approaches.\n\n**Getting Started**\nTo start working with neural networks:\n1. Learn Python programming\n2. Study linear algebra and calculus\n3. Experiment with frameworks like PyTorch or TensorFlow\n4. Start with simple datasets and architectures\n5. Gradually move to more complex problems\n\nNeural networks may seem complex, but understanding the fundamentals will give you a solid foundation for exploring more advanced topics in AI.",
+          url: "https://example.com/blog3",
+          author: "AI Research Lab",
+          published: "2026-04-21"
         }
       ]
     };
 
     // GitHub data source URLs
-    const PODCASTS_URL = './feed-podcasts.json';
     const TWEETS_URL = './feed-x.json';
     const BLOGS_URL = './feed-blogs.json';
 
@@ -628,12 +795,13 @@
         'previous-day': 'Previous',
         'next-day': 'Next',
         'viewing': 'Viewing:',
-        'podcasts-title': 'Podcasts',
         'tweets-title': 'Twitter Updates',
         'blogs-title': 'Engineering Blogs',
-        'listen-now': 'Listen Now',
         'view-tweet': 'View Tweet',
-        'read-more': 'Read More'
+        'read-more': 'Read More',
+        'close': 'Close',
+        'view-full': 'View Full Tweet',
+        'view-original': 'View Original Post'
       },
       zh: {
         'logo': '关注构建者',
@@ -643,12 +811,13 @@
         'previous-day': '前一天',
         'next-day': '后一天',
         'viewing': '查看：',
-        'podcasts-title': '播客',
         'tweets-title': 'Twitter更新',
         'blogs-title': '工程博客',
-        'listen-now': '立即收听',
         'view-tweet': '查看推文',
-        'read-more': '阅读更多'
+        'read-more': '阅读更多',
+        'close': '关闭',
+        'view-full': '查看完整推文',
+        'view-original': '查看原文'
       }
     };
 
@@ -679,7 +848,6 @@
         updateDateDisplay(currentOffset);
       }
 
-      // 修复：使用 selectedDate 而不是 currentDate
       if (selectedDate) {
         renderContent(selectedDate);
       }
@@ -712,11 +880,7 @@
     // Load data from JSON files with fallback
     async function loadData() {
       try {
-        const [podcasts, tweets, blogs] = await Promise.all([
-          fetch(PODCASTS_URL).then(res => {
-            if (!res.ok) throw new Error('Podcasts file not found');
-            return res.json();
-          }),
+        const [tweets, blogs] = await Promise.all([
           fetch(TWEETS_URL).then(res => {
             if (!res.ok) throw new Error('Tweets file not found');
             return res.json();
@@ -727,7 +891,7 @@
           })
         ]);
 
-        return { podcasts, tweets, blogs };
+        return { tweets, blogs };
       } catch (error) {
         console.log('Using default data:', error);
         return defaultData;
@@ -768,29 +932,11 @@
       const data = await loadData();
 
       // 确保数据是数组
-      const podcasts = Array.isArray(data.podcasts) ? data.podcasts : defaultData.podcasts;
       const tweets = Array.isArray(data.tweets) ? data.tweets : defaultData.tweets;
       const blogs = Array.isArray(data.blogs) ? data.blogs : defaultData.blogs;
 
-      renderPodcasts(podcasts, date);
       renderTweets(tweets, date);
       renderBlogs(blogs, date);
-    }
-
-    function renderPodcasts(podcasts, date) {
-      const container = document.getElementById('podcasts-content');
-      if (!Array.isArray(podcasts)) {
-        container.innerHTML = '<div class="content-item"><p>No podcasts available</p></div>';
-        return;
-      }
-      container.innerHTML = podcasts.map(podcast => `
-        <div class="content-item">
-          <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-          <div class="item-title">${podcast.name || podcast.title || 'Untitled'}</div>
-          <div class="item-content">${podcast.description || podcast.summary || 'No description available'}</div>
-          ${podcast.url ? `<a href="${podcast.url}" target="_blank" class="item-link">${translations[currentLanguage]['listen-now']}</a>` : ''}
-        </div>
-      `).join('');
     }
 
     function renderTweets(tweets, date) {
@@ -799,12 +945,12 @@
         container.innerHTML = '<div class="content-item"><p>No tweets available</p></div>';
         return;
       }
-      container.innerHTML = tweets.map(tweet => `
+      container.innerHTML = tweets.map((tweet, index) => `
         <div class="content-item">
           <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
           <div class="item-title">${tweet.name || tweet.handle || 'Unknown User'}</div>
           <div class="item-content">${tweet.text || tweet.content || 'No content available'}</div>
-          ${tweet.url ? `<a href="${tweet.url}" target="_blank" class="item-link">${translations[currentLanguage]['view-tweet']}</a>` : ''}
+          <button class="item-link" onclick="openModal('tweet', ${index})">${translations[currentLanguage]['view-tweet']}</button>
         </div>
       `).join('');
     }
@@ -815,15 +961,69 @@
         container.innerHTML = '<div class="content-item"><p>No blogs available</p></div>';
         return;
       }
-      container.innerHTML = blogs.map(blog => `
+      container.innerHTML = blogs.map((blog, index) => `
         <div class="content-item">
           <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
           <div class="item-title">${blog.title || blog.name || 'Untitled'}</div>
           <div class="item-content">${blog.description || blog.summary || 'No description available'}</div>
-          ${blog.url ? `<a href="${blog.url}" target="_blank" class="item-link">${translations[currentLanguage]['read-more']}</a>` : ''}
+          <button class="item-link" onclick="openModal('blog', ${index})">${translations[currentLanguage]['read-more']}</button>
         </div>
       `).join('');
     }
+
+    // Modal functions
+    let currentData = null;
+
+    function openModal(type, index) {
+      const data = currentData || defaultData;
+      const items = type === 'tweet' ? data.tweets : data.blogs;
+      const item = items[index];
+
+      if (!item) return;
+
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMeta = document.getElementById('modal-meta');
+      const modalBody = document.getElementById('modal-body');
+      const modalFooter = document.getElementById('modal-footer');
+
+      if (type === 'tweet') {
+        modalTitle.textContent = item.name || item.handle;
+        modalMeta.textContent = `@${item.handle} • ${item.date || new Date().toLocaleDateString()}`;
+        modalBody.textContent = item.text || item.content || 'No content available';
+        modalFooter.innerHTML = `<a href="${item.url}" target="_blank" class="modal-link">${translations[currentLanguage]['view-full']}</a>`;
+      } else {
+        modalTitle.textContent = item.title || item.name;
+        const authorText = item.author ? `By ${item.author}` : '';
+        const publishedText = item.published ? ` • ${item.published}` : '';
+        modalMeta.textContent = `${authorText}${publishedText}`;
+        modalBody.textContent = item.content || item.description || 'No content available';
+        modalFooter.innerHTML = `<a href="${item.url}" target="_blank" class="modal-link">${translations[currentLanguage]['view-original']}</a>`;
+      }
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on outside click
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
 
     // Initialize
     document.addEventListener('DOMContentLoaded', async () => {
@@ -839,12 +1039,17 @@
       dateInput.value = `${year}-${month}-${day}`;
 
       updateDateDisplayForCustomDate(today);
+
+      // Load and save data for modal
+      currentData = await loadData();
+
       await renderContent(today);
 
       dateInput.addEventListener('change', async () => {
         if (dateInput.value) {
           selectedDate = new Date(dateInput.value);
           updateDateDisplayForCustomDate(selectedDate);
+          currentData = await loadData();
           await renderContent(selectedDate);
         }
       });
