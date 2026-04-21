@@ -398,11 +398,65 @@
             try {
                 // Load Twitter data
                 const twitterResponse = await fetch(`./feed-x.json`);
-                twitterData = twitterResponse.ok ? await twitterResponse.json() : [];
+                let twitterRaw = twitterResponse.ok ? await twitterResponse.json() : null;
+
+                // Parse Twitter data - handle different formats
+                if (twitterRaw && twitterRaw.x) {
+                    // Format: { x: [ { name, tweets: [...] } ] }
+                    twitterData = [];
+                    twitterRaw.x.forEach(builder => {
+                        builder.tweets.forEach(tweet => {
+                            twitterData.push({
+                                author: builder.name,
+                                content: tweet.text,
+                                date: tweet.createdAt,
+                                url: tweet.url
+                            });
+                        });
+                    });
+                } else if (twitterRaw && Array.isArray(twitterRaw)) {
+                    // Format: [ { author, content, date } ]
+                    twitterData = twitterRaw;
+                } else {
+                    twitterData = [];
+                }
 
                 // Load blog data
                 const blogResponse = await fetch(`./feed-blogs.json`);
-                blogData = blogResponse.ok ? await blogResponse.json() : [];
+                let blogRaw = blogResponse.ok ? await blogResponse.json() : null;
+
+                // Parse blog data - handle different formats
+                if (blogRaw && typeof blogRaw === 'string') {
+                    // Might be wrapped in pdf_content
+                    try {
+                        blogRaw = JSON.parse(blogRaw);
+                    } catch (e) {
+                        blogRaw = null;
+                    }
+                }
+
+                if (blogRaw && blogRaw.pdf_content) {
+                    // Format: { pdf_content: "..." }
+                    try {
+                        const parsed = JSON.parse(blogRaw.pdf_content);
+                        if (parsed.blogs) {
+                            // Format: { pdf_content: { blogs: [...] } }
+                            blogData = parsed.blogs;
+                        } else {
+                            blogData = [];
+                        }
+                    } catch (e) {
+                        blogData = [];
+                    }
+                } else if (blogRaw && blogRaw.blogs) {
+                    // Format: { blogs: [...] }
+                    blogData = blogRaw.blogs;
+                } else if (blogRaw && Array.isArray(blogRaw)) {
+                    // Format: [ { author, content, date } ]
+                    blogData = blogRaw;
+                } else {
+                    blogData = [];
+                }
 
                 renderContent();
             } catch (error) {
