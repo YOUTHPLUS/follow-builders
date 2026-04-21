@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Builders Tracker</title>
+    <title>Follow Builders, Not Influencers</title>
     <style>
         * {
             margin: 0;
@@ -12,47 +12,41 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
             background: #f5f5f7;
             color: #1d1d1f;
             line-height: 1.5;
-            padding: 20px;
+            padding: 0;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-        }
-
-        .header {
-            padding: 40px;
+        .hero-section {
+            background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+            padding: 120px 20px 80px;
             text-align: center;
-            background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
-            border-bottom: 1px solid #e5e5e5;
         }
 
-        .header h1 {
-            font-size: 48px;
-            font-weight: 600;
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
             color: #1d1d1f;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            letter-spacing: -0.015em;
+            line-height: 1.1;
         }
 
-        .header p {
-            font-size: 17px;
+        .hero-subtitle {
+            font-size: 24px;
             color: #6e6e73;
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .language-toggle {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #f5f5f7;
+            top: 24px;
+            right: 24px;
+            background: rgba(0, 0, 0, 0.04);
             border: none;
             padding: 8px 16px;
             border-radius: 20px;
@@ -64,31 +58,40 @@
         }
 
         .language-toggle:hover {
-            background: #e5e5e5;
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
         .date-controls {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 20px;
-            background: #f5f5f7;
-            border-bottom: 1px solid #e5e5e5;
+            gap: 24px;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            margin-bottom: 60px;
         }
 
         .date-btn {
             background: none;
             border: none;
-            color: #0066cc;
-            font-size: 14px;
+            color: #1d1d1f;
+            font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 8px 16px;
             transition: all 0.2s ease;
         }
 
         .date-btn:hover {
-            text-decoration: underline;
+            color: #0066cc;
         }
 
         .date-btn:active {
@@ -96,65 +99,65 @@
         }
 
         .date-input {
-            background: white;
-            border: 1px solid #d2d2d7;
+            background: #f5f5f7;
+            border: none;
             border-radius: 8px;
-            padding: 8px 16px;
-            font-size: 14px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
             color: #1d1d1f;
-            min-width: 140px;
+            min-width: 160px;
             cursor: pointer;
         }
 
         .date-input:focus {
             outline: none;
-            border-color: #0066cc;
-        }
-
-        .content {
-            padding: 20px 40px;
+            background: #ebebeb;
         }
 
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            margin-bottom: 32px;
         }
 
         .section-title {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 40px;
+            font-weight: 700;
             color: #1d1d1f;
-            margin-bottom: 16px;
-            letter-spacing: -0.2px;
+            letter-spacing: -0.003em;
         }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 32px;
         }
 
         .card {
             background: white;
-            border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 32px;
             transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
         .card:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
         }
 
         .card-avatar {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
@@ -162,24 +165,24 @@
             justify-content: center;
             color: white;
             font-weight: 600;
-            font-size: 16px;
-            margin-right: 12px;
+            font-size: 18px;
+            margin-right: 16px;
         }
 
         .card-title {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 600;
             color: #1d1d1f;
         }
 
         .card-time {
-            font-size: 12px;
-            color: #6e6e73;
+            font-size: 13px;
+            color: #86868b;
             margin-top: 2px;
         }
 
         .card-content {
-            font-size: 14px;
+            font-size: 15px;
             color: #1d1d1f;
             line-height: 1.6;
             white-space: pre-wrap;
@@ -188,72 +191,89 @@
 
         .card-type {
             font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-weight: 500;
             display: inline-block;
-            margin-top: 12px;
+            margin-top: 16px;
+            letter-spacing: 0.02em;
         }
 
         .card-type.twitter {
-            background: rgba(29, 161, 242, 0.1);
+            background: rgba(29, 161, 242, 0.08);
             color: #1da1f2;
         }
 
         .card-type.blog {
-            background: rgba(52, 211, 153, 0.1);
+            background: rgba(52, 211, 153, 0.08);
             color: #34d399;
         }
 
         .loading {
             text-align: center;
-            padding: 40px;
+            padding: 80px 20px;
             color: #6e6e73;
+            font-size: 17px;
         }
 
         .error {
             text-align: center;
-            padding: 40px;
+            padding: 80px 20px;
             color: #ff3b30;
+            font-size: 17px;
         }
 
         .no-data {
             text-align: center;
-            padding: 60px 20px;
+            padding: 120px 20px;
             color: #6e6e73;
+            font-size: 19px;
         }
 
         .footer {
             text-align: center;
-            padding: 30px;
-            border-top: 1px solid #e5e5e5;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
             color: #6e6e73;
-            font-size: 13px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
         }
 
         .footer a {
             color: #0066cc;
             text-decoration: none;
+            font-weight: 500;
         }
 
         .footer a:hover {
             text-decoration: underline;
         }
 
+        .footer .repo-info {
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 32px;
+            .hero-title {
+                font-size: 40px;
             }
 
-            .header p {
-                font-size: 15px;
+            .hero-subtitle {
+                font-size: 18px;
             }
 
-            .header {
-                padding: 30px 20px;
+            .hero-section {
+                padding: 80px 20px 60px;
             }
 
-            .content {
+            .container {
                 padding: 20px;
             }
 
@@ -262,37 +282,48 @@
             }
 
             .date-controls {
-                padding: 16px;
+                padding: 20px;
             }
 
             .date-input {
-                min-width: 120px;
-                font-size: 13px;
+                min-width: 140px;
+                font-size: 15px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .card {
+                padding: 24px;
             }
         }
     </style>
 </head>
 <body>
+    <button class="language-toggle" onclick="switchLanguage()">中文</button>
+
+    <div class="hero-section">
+        <h1 class="hero-title" id="mainTitle">Follow builders,<br>not influencers</h1>
+        <p class="hero-subtitle" id="subtitle">Track AI builders' latest content and insights</p>
+    </div>
+
     <div class="container">
-        <button class="language-toggle" onclick="switchLanguage()">English</button>
-
-        <div class="header">
-            <h1 id="mainTitle">AI Builders Tracker</h1>
-            <p id="subtitle">Track AI builders' latest content and insights</p>
-        </div>
-
         <div class="date-controls">
-            <button class="date-btn" onclick="changeDate(-1)" id="prevDay">Previous Day</button>
+            <button class="date-btn" onclick="changeDate(-1)" id="prevDay">← Previous</button>
             <input type="date" class="date-input" id="datePicker" onchange="handleDateChange()">
-            <button class="date-btn" onclick="changeDate(1)" id="nextDay">Next Day</button>
+            <button class="date-btn" onclick="changeDate(1)" id="nextDay">Next →</button>
         </div>
 
-        <div class="content" id="content">
+        <div id="content">
             <div class="loading" id="loading">Loading...</div>
         </div>
+    </div>
 
-        <div class="footer">
-            <a href="https://github.com/zarazhangrui/follow-builders" target="_blank">Source</a>
+    <div class="footer">
+        <div class="footer-content">
+            <div>Source: <a href="https://github.com/zarazhangrui/follow-builders" target="_blank">zarazhangrui/follow-builders</a></div>
+            <div class="repo-info">GitHub Repository - Data updated automatically</div>
         </div>
     </div>
 
@@ -306,10 +337,10 @@
         // Language texts
         const translations = {
             en: {
-                mainTitle: 'AI Builders Tracker',
+                mainTitle: 'Follow builders,<br>not influencers',
                 subtitle: "Track AI builders' latest content and insights",
-                prevDay: 'Previous Day',
-                nextDay: 'Next Day',
+                prevDay: '← Previous',
+                nextDay: 'Next →',
                 twitterSection: 'Twitter',
                 blogSection: 'Blogs',
                 loading: 'Loading...',
@@ -318,10 +349,10 @@
                 langBtn: '中文'
             },
             zh: {
-                mainTitle: 'AI构建者追踪',
+                mainTitle: '关注构建者，<br>而非网红',
                 subtitle: '追踪AI构建者的最新内容和见解',
-                prevDay: '前一天',
-                nextDay: '后一天',
+                prevDay: '← 前一天',
+                nextDay: '后一天 →',
                 twitterSection: 'Twitter',
                 blogSection: '博客',
                 loading: '加载中...',
@@ -357,7 +388,7 @@
 
         function updateLanguageUI() {
             const t = translations[currentLang];
-            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('mainTitle').innerHTML = t.mainTitle;
             document.getElementById('subtitle').textContent = t.subtitle;
             document.getElementById('prevDay').textContent = t.prevDay;
             document.getElementById('nextDay').textContent = t.nextDay;
@@ -402,7 +433,6 @@
 
                 // Parse Twitter data - handle different formats
                 if (twitterRaw && twitterRaw.x) {
-                    // Format: { x: [ { name, tweets: [...] } ] }
                     twitterData = [];
                     twitterRaw.x.forEach(builder => {
                         builder.tweets.forEach(tweet => {
@@ -415,7 +445,6 @@
                         });
                     });
                 } else if (twitterRaw && Array.isArray(twitterRaw)) {
-                    // Format: [ { author, content, date } ]
                     twitterData = twitterRaw;
                 } else {
                     twitterData = [];
@@ -425,9 +454,7 @@
                 const blogResponse = await fetch(`./feed-blogs.json`);
                 let blogRaw = blogResponse.ok ? await blogResponse.json() : null;
 
-                // Parse blog data - handle different formats
                 if (blogRaw && typeof blogRaw === 'string') {
-                    // Might be wrapped in pdf_content
                     try {
                         blogRaw = JSON.parse(blogRaw);
                     } catch (e) {
@@ -436,11 +463,9 @@
                 }
 
                 if (blogRaw && blogRaw.pdf_content) {
-                    // Format: { pdf_content: "..." }
                     try {
                         const parsed = JSON.parse(blogRaw.pdf_content);
                         if (parsed.blogs) {
-                            // Format: { pdf_content: { blogs: [...] } }
                             blogData = parsed.blogs;
                         } else {
                             blogData = [];
@@ -449,10 +474,8 @@
                         blogData = [];
                     }
                 } else if (blogRaw && blogRaw.blogs) {
-                    // Format: { blogs: [...] }
                     blogData = blogRaw.blogs;
                 } else if (blogRaw && Array.isArray(blogRaw)) {
-                    // Format: [ { author, content, date } ]
                     blogData = blogRaw;
                 } else {
                     blogData = [];
@@ -475,6 +498,41 @@
             });
         }
 
+        function translateContent(text, targetLang) {
+            if (targetLang === 'en' || !text) return text;
+
+            // Simple translation for common terms
+            const translations = {
+                'AI': 'AI',
+                'OpenClaw': 'OpenClaw',
+                'GPT': 'GPT',
+                'Claude': 'Claude',
+                'Twitter': 'Twitter',
+                'GitHub': 'GitHub',
+                'Vercel': 'Vercel',
+                'Next.js': 'Next.js',
+                'Product at Roblox': 'Roblox产品经理',
+                'CEO @box': 'Box首席执行官',
+                'President & CEO @ycombinator': 'Y Combinator总裁兼CEO',
+                'head of product @linear': 'Linear产品负责人',
+                'VC at @FirstMarkCap': 'FirstMark Capital风险投资人',
+                'Builder. Dangerously skips permissions.': '构建者。危险地跳过权限检查。',
+                'Harvard\'17': '哈佛2017届',
+                'achieve ambition with intentionality, intensity, integrity & insanity.': '以意图、强度、正直和疯狂实现野心。',
+                'Practical AI tutorials and interviews for busy people': '为忙碌的人提供实用的AI教程和访谈',
+                'your business lives in content. unleash it with AI': '你的业务在于内容。用AI释放它',
+                'investing in seed/A. previous: early hire @meter, @opendoor, @atlassian & others.': '投资种子轮/A轮。此前：@meter、@opendoor、@atlassian等早期员工。'
+            };
+
+            // Try to replace known terms
+            let translatedText = text;
+            Object.keys(translations).forEach(key => {
+                translatedText = translatedText.replace(new RegExp(key, 'g'), translations[key]);
+            });
+
+            return translatedText;
+        }
+
         function renderContent() {
             const contentDiv = document.getElementById('content');
             const t = translations[currentLang];
@@ -492,7 +550,9 @@
             // Render Twitter section
             if (filteredTwitter.length > 0) {
                 html += `<div class="section">
-                    <h2 class="section-title">${t.twitterSection}</h2>
+                    <div class="section-header">
+                        <h2 class="section-title">${t.twitterSection}</h2>
+                    </div>
                     <div class="card-grid">`;
                 filteredTwitter.forEach(tweet => {
                     html += renderCard(tweet, 'twitter');
@@ -503,7 +563,9 @@
             // Render Blogs section
             if (filteredBlogs.length > 0) {
                 html += `<div class="section">
-                    <h2 class="section-title">${t.blogSection}</h2>
+                    <div class="section-header">
+                        <h2 class="section-title">${t.blogSection}</h2>
+                    </div>
                     <div class="card-grid">`;
                 filteredBlogs.forEach(blog => {
                     html += renderCard(blog, 'blog');
@@ -517,14 +579,14 @@
         function renderCard(item, type) {
             const t = translations[currentLang];
             const authorInitial = item.author ? item.author.charAt(0).toUpperCase() : 'U';
-            const content = item.content || item.text || '';
+            const content = translateContent(item.content || item.text || '', currentLang);
 
             return `
                 <div class="card">
                     <div class="card-header">
                         <div class="card-avatar">${authorInitial}</div>
                         <div>
-                            <div class="card-title">${item.author || 'Unknown'}</div>
+                            <div class="card-title">${translateContent(item.author || 'Unknown', currentLang)}</div>
                             <div class="card-time">${formatDateTime(item.date)}</div>
                         </div>
                     </div>
@@ -536,13 +598,24 @@
 
         function formatDateTime(dateStr) {
             const date = new Date(dateStr);
-            return date.toLocaleString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+
+            if (currentLang === 'zh') {
+                return date.toLocaleString('zh-CN', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } else {
+                return date.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
         }
     </script>
 </body>
