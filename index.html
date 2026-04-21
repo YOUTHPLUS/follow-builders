@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Follow Builders, Not Influencers</title>
+    <title>Follow Builders Not Influencers</title>
     <style>
         * {
             margin: 0;
@@ -13,14 +13,14 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-            background: #f5f5f7;
-            color: #1d1d1f;
+            background: #000000;
+            color: #f5f5f7;
             line-height: 1.5;
             padding: 0;
         }
 
         .hero-section {
-            background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+            background: linear-gradient(180deg, #000000 0%, #1a1a1a 100%);
             padding: 120px 20px 80px;
             text-align: center;
         }
@@ -28,15 +28,18 @@
         .hero-title {
             font-size: 64px;
             font-weight: 700;
-            color: #1d1d1f;
             margin-bottom: 16px;
             letter-spacing: -0.015em;
             line-height: 1.1;
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-subtitle {
             font-size: 24px;
-            color: #6e6e73;
+            color: #86868b;
             font-weight: 400;
             max-width: 700px;
             margin: 0 auto;
@@ -46,19 +49,19 @@
             position: absolute;
             top: 24px;
             right: 24px;
-            background: rgba(0, 0, 0, 0.04);
-            border: none;
+            background: rgba(255,255,255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
-            color: #1d1d1f;
+            color: #f5f5f7;
             transition: all 0.3s ease;
         }
 
         .language-toggle:hover {
-            background: rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .container {
@@ -73,46 +76,52 @@
             justify-content: center;
             gap: 24px;
             padding: 24px;
-            background: white;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             margin-bottom: 60px;
         }
 
         .date-btn {
             background: none;
             border: none;
-            color: #1d1d1f;
-            font-size: 16px;
-            font-weight: 500;
+            color: #f5f5f7;
+            font-size: 28px;
+            font-weight: 300;
             cursor: pointer;
             padding: 8px 16px;
             transition: all 0.2s ease;
+            line-height: 1;
         }
 
         .date-btn:hover {
-            color: #0066cc;
+            color: #00c6ff;
         }
 
         .date-btn:active {
-            color: #004499;
+            color: #0072ff;
         }
 
         .date-input {
-            background: #f5f5f7;
-            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 8px;
             padding: 12px 20px;
             font-size: 16px;
             font-weight: 500;
-            color: #1d1d1f;
+            color: #f5f5f7;
             min-width: 160px;
             cursor: pointer;
         }
 
         .date-input:focus {
             outline: none;
-            background: #ebebeb;
+            border-color: #00c6ff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .date-input::-webkit-calendar-picker-indicator {
+            filter: invert(1);
         }
 
         .section {
@@ -126,7 +135,7 @@
         .section-title {
             font-size: 40px;
             font-weight: 700;
-            color: #1d1d1f;
+            color: #f5f5f7;
             letter-spacing: -0.003em;
         }
 
@@ -137,15 +146,17 @@
         }
 
         .card {
-            background: white;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 32px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
         .card:hover {
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 198, 255, 0.15);
             transform: translateY(-4px);
         }
 
@@ -159,7 +170,7 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #a855f7 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -172,7 +183,7 @@
         .card-title {
             font-size: 17px;
             font-weight: 600;
-            color: #1d1d1f;
+            color: #f5f5f7;
         }
 
         .card-time {
@@ -183,7 +194,7 @@
 
         .card-content {
             font-size: 15px;
-            color: #1d1d1f;
+            color: #d1d1d6;
             line-height: 1.6;
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -200,43 +211,43 @@
         }
 
         .card-type.twitter {
-            background: rgba(29, 161, 242, 0.08);
+            background: rgba(29, 161, 242, 0.15);
             color: #1da1f2;
         }
 
         .card-type.blog {
-            background: rgba(52, 211, 153, 0.08);
+            background: rgba(52, 211, 153, 0.15);
             color: #34d399;
         }
 
         .loading {
             text-align: center;
             padding: 80px 20px;
-            color: #6e6e73;
+            color: #86868b;
             font-size: 17px;
         }
 
         .error {
             text-align: center;
             padding: 80px 20px;
-            color: #ff3b30;
+            color: #ff453a;
             font-size: 17px;
         }
 
         .no-data {
             text-align: center;
             padding: 120px 20px;
-            color: #6e6e73;
+            color: #86868b;
             font-size: 19px;
         }
 
         .footer {
             text-align: center;
             padding: 60px 20px;
-            border-top: 1px solid rgba(0, 0, 0, 0.06);
-            color: #6e6e73;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #86868b;
             font-size: 14px;
-            background: white;
+            background: #000000;
         }
 
         .footer-content {
@@ -246,13 +257,14 @@
         }
 
         .footer a {
-            color: #0066cc;
+            color: #00c6ff;
             text-decoration: none;
             font-weight: 500;
         }
 
         .footer a:hover {
             text-decoration: underline;
+            color: #0072ff;
         }
 
         .footer .repo-info {
@@ -304,15 +316,15 @@
     <button class="language-toggle" onclick="switchLanguage()">中文</button>
 
     <div class="hero-section">
-        <h1 class="hero-title" id="mainTitle">Follow builders,<br>not influencers</h1>
+        <h1 class="hero-title" id="mainTitle">Follow Builders<br>Not Influencers</h1>
         <p class="hero-subtitle" id="subtitle">Track AI builders' latest content and insights</p>
     </div>
 
     <div class="container">
         <div class="date-controls">
-            <button class="date-btn" onclick="changeDate(-1)" id="prevDay">← Previous</button>
+            <button class="date-btn" onclick="changeDate(-1)" id="prevDay">←</button>
             <input type="date" class="date-input" id="datePicker" onchange="handleDateChange()">
-            <button class="date-btn" onclick="changeDate(1)" id="nextDay">Next →</button>
+            <button class="date-btn" onclick="changeDate(1)" id="nextDay">→</button>
         </div>
 
         <div id="content">
@@ -337,10 +349,8 @@
         // Language texts
         const translations = {
             en: {
-                mainTitle: 'Follow builders,<br>not influencers',
+                mainTitle: 'Follow Builders<br>Not Influencers',
                 subtitle: "Track AI builders' latest content and insights",
-                prevDay: '← Previous',
-                nextDay: 'Next →',
                 twitterSection: 'Twitter',
                 blogSection: 'Blogs',
                 loading: 'Loading...',
@@ -349,10 +359,8 @@
                 langBtn: '中文'
             },
             zh: {
-                mainTitle: '关注构建者，<br>而非网红',
+                mainTitle: '关注构建者<br>而非网红',
                 subtitle: '追踪AI构建者的最新内容和见解',
-                prevDay: '← 前一天',
-                nextDay: '后一天 →',
                 twitterSection: 'Twitter',
                 blogSection: '博客',
                 loading: '加载中...',
@@ -390,8 +398,6 @@
             const t = translations[currentLang];
             document.getElementById('mainTitle').innerHTML = t.mainTitle;
             document.getElementById('subtitle').textContent = t.subtitle;
-            document.getElementById('prevDay').textContent = t.prevDay;
-            document.getElementById('nextDay').textContent = t.nextDay;
             document.querySelector('.language-toggle').textContent = t.langBtn;
         }
 
