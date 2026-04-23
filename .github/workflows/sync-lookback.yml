@@ -1,0 +1,68 @@
+name: Sync & Update LookbackHours
+
+on:
+  # 手动触发
+  workflow_dispatch:
+  
+  # 每天早上8点自动运行（北京时间 00:00）
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  sync-and-update:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. 添加上游仓库为 remote
+      - name: Add upstream repository
+        run: |
+          git remote add upstream https://github.com/zarazhangrui/follow-builders.git
+
+      # 3. 拉取上游最新代码
+      - name: Fetch upstream changes
+        run: |
+          git fetch upstream
+          git checkout main
+          git reset --hard upstream/main
+
+      # 4. 修改 feed-x.json 的 lookbackHours
+      - name: Update lookbackHours in feed-x.json
+        run: |
+          # macOS 和 Ubuntu 都用 sed
+          sed -i 's/"lookbackHours": [0-9]*/"lookbackHours": 336/g' feed-x.json
+          echo "✅ feed-x.json lookbackHours 已更新为 336"
+
+      # 5. 修改 feed-podcasts.json 的 lookbackHours
+      - name: Update lookbackHours in feed-podcasts.json
+        run: |
+          sed -i 's/"lookbackHours": [0-9]*/"lookbackHours": 336/g' feed-podcasts.json
+          echo "✅ feed-podcasts.json lookbackHours 已更新为 336"
+
+      # 6. 修改 feed-blogs.json 的 lookbackHours
+      - name: Update lookbackHours in feed-blogs.json
+        run: |
+          sed -i 's/"lookbackHours": [0-9]*/"lookbackHours": 336/g' feed-blogs.json
+          echo "✅ feed-blogs.json lookbackHours 已更新为 336"
+
+      # 7. 提交并推送
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 检查是否有变更
+          git add .
+          if git diff --staged --quiet; then
+            echo "ℹ️ 没有需要更新的内容"
+          else
+            git commit -m "chore: sync upstream + set lookbackHours to 336"
+            git push origin main --force
+            echo "✅ 已提交并推送更新"
+          fi
