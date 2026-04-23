@@ -13,7 +13,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
       background: #000000;
@@ -23,14 +22,11 @@
       letter-spacing: -0.022em;
       font-weight: 400;
     }
-
     .container {
       max-width: 980px;
       margin: 0 auto;
       padding: 0 22px;
     }
-
-    /* Apple-style navigation */
     .nav {
       position: fixed;
       top: 0;
@@ -41,7 +37,6 @@
       -webkit-backdrop-filter: saturate(180%) blur(20px);
       z-index: 9999;
     }
-
     .nav-content {
       max-width: 980px;
       margin: 0 auto;
@@ -51,20 +46,17 @@
       padding: 0 22px;
       height: 48px;
     }
-
     .nav-logo {
       font-size: 17px;
       font-weight: 600;
       color: #f5f5f7;
       letter-spacing: -0.022em;
     }
-
     .lang-switch {
       display: flex;
       align-items: center;
       gap: 6px;
     }
-
     .lang-btn {
       background: transparent;
       border: none;
@@ -76,28 +68,22 @@
       transition: color 0.3s;
       font-family: inherit;
     }
-
     .lang-btn:hover {
       color: #f5f5f7;
     }
-
     .lang-btn.active {
       color: #f5f5f7;
       font-weight: 600;
     }
-
     .lang-divider {
       color: #424245;
       font-size: 13px;
     }
-
-    /* Apple-style hero section */
     .hero {
       padding: 60px 0;
       text-align: center;
       margin-top: 48px;
     }
-
     .hero h1 {
       font-size: 48px;
       line-height: 1.08333;
@@ -105,14 +91,12 @@
       letter-spacing: -0.005em;
       margin-bottom: 6px;
     }
-
     .hero h1 .gradient {
       background: linear-gradient(90deg, #b2a2ff 0%, #ff6b6b 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
     .hero p {
       font-size: 24px;
       line-height: 1.16667;
@@ -123,8 +107,6 @@
       margin-left: auto;
       margin-right: auto;
     }
-
-    /* Date selector */
     .date-selector {
       background: #1d1d1f;
       border-radius: 14px;
@@ -132,7 +114,6 @@
       margin: 16px auto;
       max-width: 350px;
     }
-
     .date-selector h3 {
       font-size: 13px;
       font-weight: 600;
@@ -140,14 +121,12 @@
       letter-spacing: -0.022em;
       color: #86868b;
     }
-
     .date-nav {
       display: flex;
       align-items: center;
       gap: 8px;
       margin-bottom: 10px;
     }
-
     .date-nav-btn {
       background: transparent;
       border: none;
@@ -159,16 +138,10 @@
       padding: 0;
       letter-spacing: -0.022em;
     }
-
     .date-nav-btn:hover {
       color: #147ce5;
       text-decoration: underline;
     }
-
-    .date-nav-btn:active {
-      color: #0a5cb5;
-    }
-
     .date-nav input[type="date"] {
       flex: 1;
       padding: 8px 12px;
@@ -182,23 +155,16 @@
       min-width: 140px;
       text-align: center;
     }
-
     .date-nav input[type="date"]:focus {
       outline: none;
       border-color: #2997ff;
     }
-
     .date-nav input[type="date"]::-webkit-calendar-picker-indicator {
       cursor: pointer;
       filter: invert(1);
       opacity: 0.6;
       padding: 4px;
     }
-
-    .date-nav input[type="date"]::-webkit-calendar-picker-indicator:hover {
-      opacity: 1;
-    }
-
     .current-date {
       text-align: center;
       margin: 15px 0;
@@ -206,20 +172,15 @@
       color: #86868b;
       letter-spacing: -0.022em;
     }
-
     .current-date strong {
       color: #f5f5f7;
     }
-
-    /* Content sections */
     .content {
       padding: 60px 0;
     }
-
     .section {
       margin-bottom: 80px;
     }
-
     .section-title {
       font-size: 40px;
       line-height: 1.1;
@@ -227,7 +188,6 @@
       letter-spacing: -0.003em;
       margin-bottom: 30px;
     }
-
     .content-item {
       background: #1d1d1f;
       border-radius: 18px;
@@ -235,18 +195,15 @@
       margin-bottom: 20px;
       transition: transform 0.3s;
     }
-
     .content-item:hover {
       transform: scale(1.01);
     }
-
     .item-date {
       font-size: 14px;
       color: #86868b;
       margin-bottom: 12px;
       letter-spacing: -0.022em;
     }
-
     .item-title {
       font-size: 21px;
       line-height: 1.19048;
@@ -254,7 +211,6 @@
       margin-bottom: 10px;
       letter-spacing: -0.022em;
     }
-
     .item-content {
       font-size: 17px;
       line-height: 1.52941;
@@ -262,7 +218,6 @@
       margin-bottom: 15px;
       letter-spacing: -0.022em;
     }
-
     .item-link {
       display: inline-block;
       padding: 12px 24px;
@@ -276,233 +231,62 @@
       transition: all 0.3s;
       letter-spacing: -0.022em;
     }
-
     .item-link:hover {
       background: #147ce5;
       transform: scale(1.02);
     }
-
-    /* Loading */
     .loading {
       text-align: center;
       padding: 100px 0;
       font-size: 17px;
       color: #86868b;
     }
-
     .loading-icon {
       font-size: 48px;
       margin-bottom: 20px;
       animation: pulse 2s ease-in-out infinite;
     }
-
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
-
-    /* Footer */
     .footer {
       background: transparent;
       padding: 20px 0;
       text-align: center;
       margin-top: 40px;
     }
-
     .footer p {
       font-size: 12px;
       color: #86868b;
       margin: 0;
       letter-spacing: -0.022em;
     }
-
     .footer a {
       color: #2997ff;
       text-decoration: none;
       transition: opacity 0.3s;
     }
-
     .footer a:hover {
       opacity: 0.7;
     }
-
-    /* Responsive design - Mobile first */
     @media (max-width: 768px) {
-      .container {
-        padding: 0 16px;
-      }
-
-      .lang-switch {
-        gap: 4px;
-      }
-
-      .lang-btn {
-        padding: 3px 6px;
-        font-size: 12px;
-      }
-
-      .lang-divider {
-        font-size: 12px;
-      }
-
-      .hero h1 {
-        font-size: 40px;
-        line-height: 1.1;
-      }
-
-      .hero p {
-        font-size: 19px;
-        line-height: 1.42105;
-      }
-
-      .date-selector {
-        padding: 8px 12px;
-        margin: 12px auto;
-        max-width: 100%;
-      }
-
-      .date-selector h3 {
-        font-size: 12px;
-        margin-bottom: 6px;
-      }
-
-      .date-nav {
-        gap: 6px;
-        margin-bottom: 8px;
-      }
-
-      .date-nav-btn {
-        font-size: 13px;
-      }
-
-      .date-nav input[type="date"] {
-        padding: 6px 10px;
-        font-size: 13px;
-        min-width: 120px;
-      }
-
-      .current-date {
-        margin: 12px 0;
-        font-size: 13px;
-      }
-
-      .section-title {
-        font-size: 32px;
-        line-height: 1.125;
-      }
-
-      .content {
-        padding: 24px 0;
-      }
-
-      .content-item {
-        padding: 16px;
-        margin-bottom: 12px;
-        border-radius: 12px;
-      }
-
-      .item-title {
-        font-size: 19px;
-        line-height: 1.26316;
-      }
-
-      .item-content {
-        font-size: 16px;
-        line-height: 1.625;
-      }
+      .container { padding: 0 16px; }
+      .hero h1 { font-size: 40px; }
+      .hero p { font-size: 19px; }
+      .section-title { font-size: 32px; }
+      .content { padding: 24px 0; }
+      .content-item { padding: 16px; margin-bottom: 12px; border-radius: 12px; }
     }
-
     @media (max-width: 480px) {
-      .container {
-        padding: 0 12px;
-      }
-
-      .nav-logo {
-        font-size: 15px;
-      }
-
-      .lang-switch {
-        gap: 3px;
-      }
-
-      .lang-btn {
-        padding: 2px 5px;
-        font-size: 11px;
-      }
-
-      .lang-divider {
-        font-size: 11px;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-        line-height: 1.125;
-      }
-
-      .hero p {
-        font-size: 17px;
-        line-height: 1.58824;
-      }
-
-      .date-selector {
-        padding: 6px 10px;
-        margin: 10px auto;
-      }
-
-      .date-selector h3 {
-        font-size: 11px;
-        margin-bottom: 4px;
-      }
-
-      .date-nav {
-        gap: 4px;
-        margin-bottom: 6px;
-      }
-
-      .date-nav-btn {
-        font-size: 12px;
-      }
-
-      .date-nav input[type="date"] {
-        padding: 5px 8px;
-        font-size: 12px;
-        min-width: 100px;
-      }
-
-      .current-date {
-        margin: 10px 0;
-        font-size: 12px;
-      }
-
-      .section-title {
-        font-size: 28px;
-        line-height: 1.28571;
-      }
-    }
-
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #000000;
-        color: #f5f5f7;
-      }
-    }
-
-    /* Print styles */
-    @media print {
-      .nav,
-      .date-selector {
-        display: none;
-      }
-
-      .hero {
-        padding: 40px 0;
-      }
+      .container { padding: 0 12px; }
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 17px; }
+      .section-title { font-size: 28px; }
     }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
   <nav class="nav">
     <div class="nav-content">
       <div class="nav-logo" data-i18n="logo">Follow Builders</div>
@@ -513,15 +297,11 @@
       </div>
     </div>
   </nav>
-
   <div class="container">
-    <!-- Hero Section -->
     <section class="hero">
       <h1 data-i18n="hero-title">Follow <span class="gradient">Builders</span><br>Not Influencers</h1>
       <p data-i18n="hero-desc">Track top AI builders, researchers, founders, PMs, and engineers who are actually building products.</p>
     </section>
-
-    <!-- Date Selector -->
     <div class="date-selector">
       <h3 data-i18n="select-date">Select Date</h3>
       <div class="date-nav">
@@ -533,47 +313,27 @@
         <span data-i18n="viewing">Viewing:</span> <strong id="currentDateDisplay">Today</strong>
       </div>
     </div>
-
-    <!-- Loading -->
     <div id="loading" class="loading">
       <div class="loading-icon">⏳</div>
       <p data-i18n="loading">Loading data...</p>
     </div>
-
-    <!-- Content -->
     <div id="content" class="content" style="display: none;">
-      <section class="section" id="podcasts">
-        <h2 class="section-title" data-i18n="podcasts-title">Podcasts</h2>
-        <div id="podcasts-content"></div>
-      </section>
-
       <section class="section" id="tweets">
         <h2 class="section-title" data-i18n="tweets-title">Twitter Updates</h2>
         <div id="tweets-content"></div>
       </section>
-
-      <section class="section" id="blogs">
-        <h2 class="section-title" data-i18n="blogs-title">Engineering Blogs</h2>
-        <div id="blogs-content"></div>
-      </section>
     </div>
-
-    <!-- Footer -->
     <footer class="footer">
-      <p>Source: <a href="https://github.com/zarazhangrui/follow-builders" target="_blank">follow-builders project</a></p>
+      <p>Source: <a href="https://github.com/YOUTHPLUS/follow-builders" target="_blank">follow-builders project</a></p>
     </footer>
   </div>
-
   <script>
-    // GitHub data source URLs
-    const PODCASTS_URL = 'https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-podcasts.json';
-    const TWEETS_URL = 'https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-x.json';
-    const BLOGS_URL = 'https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-blogs.json';
-
-    let currentOffset = 0; // 0=today, -1=yesterday, -2=2 days ago
-    let selectedDate = null; // Store the selected date
-
-    // Language translations
+    // ✅ 修改为你的 fork 仓库地址
+    const TWEETS_URL = 'https://raw.githubusercontent.com/YOUTHPLUS/follow-builders/main/feed-x.json';
+    
+    let currentOffset = 0;
+    let selectedDate = null;
+    
     const translations = {
       en: {
         'logo': 'Follow Builders',
@@ -584,12 +344,8 @@
         'next-day': 'Next',
         'viewing': 'Viewing:',
         'loading': 'Loading data...',
-        'podcasts-title': 'Podcasts',
         'tweets-title': 'Twitter Updates',
-        'blogs-title': 'Engineering Blogs',
-        'listen-now': 'Listen Now',
         'view-tweet': 'View Tweet',
-        'read-more': 'Read More',
         'no-data': 'No data available for this date.',
         'no-data-custom': 'No data available for {date}.',
         'failed-load': 'Failed to load data. Please try again.',
@@ -604,328 +360,145 @@
         'next-day': '后一天',
         'viewing': '查看：',
         'loading': '加载数据中...',
-        'podcasts-title': '播客',
         'tweets-title': 'Twitter更新',
-        'blogs-title': '工程博客',
-        'listen-now': '立即收听',
         'view-tweet': '查看推文',
-        'read-more': '阅读更多',
         'no-data': '此日期没有可用数据。',
         'no-data-custom': '{date}没有可用数据。',
         'failed-load': '加载数据失败，请重试。',
         'select-date-alert': '请选择日期'
       }
     };
-
+    
     let currentLanguage = localStorage.getItem('language') || 'en';
-
-    // Cache for all data
-    let allPodcasts = [];
     let allTweets = [];
-    let allBlogs = [];
-
-    // Cache for filtered data
     let filteredDataCache = null;
-
-    // Switch language function
+    
     function switchLanguage(lang) {
       currentLanguage = lang;
       localStorage.setItem('language', lang);
-
-      // Update button states
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
-        if (btn.dataset.lang === lang) {
-          btn.classList.add('active');
-        }
+        if (btn.dataset.lang === lang) btn.classList.add('active');
       });
-
-      // Update all translatable elements
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-          el.innerHTML = translations[lang][key];
-        }
+        if (translations[lang][key]) el.innerHTML = translations[lang][key];
       });
-
-      // Update date display
-      if (selectedDate) {
-        updateDateDisplayForCustomDate(selectedDate);
-      } else {
-        updateDateDisplay(currentOffset);
-      }
-
-      // Re-render content if data is loaded
+      if (selectedDate) updateDateDisplayForCustomDate(selectedDate);
+      else updateDateDisplay(currentOffset);
       const content = document.getElementById('content');
-      if (content.style.display !== 'none' && filteredDataCache) {
-        renderContent(filteredDataCache);
-      }
+      if (content.style.display !== 'none' && filteredDataCache) renderContent(filteredDataCache);
     }
-
-    // Navigate date function (previous/next day)
+    
     function navigateDate(days) {
       const dateInput = document.getElementById('customDateInput');
-      let date;
-
-      if (dateInput.value) {
-        date = new Date(dateInput.value);
-      } else {
-        date = new Date();
-      }
-
+      let date = dateInput.value ? new Date(dateInput.value) : new Date();
       date.setDate(date.getDate() + days);
-
-      // Format date as YYYY-MM-DD
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
-
-      // Update input value
-      dateInput.value = formattedDate;
-
-      // Load data for new date
+      dateInput.value = `${year}-${month}-${day}`;
       loadDataByCustomDate();
     }
-
-    // Helper function to check if two dates are the same (ignoring time)
+    
     function isSameDate(date1, date2) {
       const d1 = new Date(date1);
       const d2 = new Date(date2);
-      return d1.getFullYear() === d2.getFullYear() &&
-             d1.getMonth() === d2.getMonth() &&
-             d1.getDate() === d2.getDate();
+      return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
     }
-
-    // Load data by offset (for initial load)
+    
     async function loadDataByOffset(offset) {
       currentOffset = offset;
-
       const loading = document.getElementById('loading');
       const content = document.getElementById('content');
-
       loading.style.display = 'block';
       content.style.display = 'none';
-
-      // Calculate target date
       const today = new Date();
       const targetDate = new Date(today);
       targetDate.setDate(today.getDate() + offset);
-
-      // Update date display
       updateDateDisplay(offset);
-
       try {
-        // Load all data once
-        if (allPodcasts.length === 0) {
-          [allPodcasts, allTweets, allBlogs] = await Promise.all([
-            fetch(PODCASTS_URL).then(res => res.json()),
-            fetch(TWEETS_URL).then(res => res.json()),
-            fetch(BLOGS_URL).then(res => res.json())
-          ]);
+        if (allTweets.length === 0) {
+          [allTweets] = await Promise.all([fetch(TWEETS_URL).then(res => res.json())]);
         }
-
-        // Filter data by target date
         const filteredData = filterDataByDate(targetDate);
         filteredDataCache = filteredData;
-
-        if (filteredData.isEmpty) {
-          showNoDataMessage(targetDate);
-        } else {
-          renderContent(filteredData);
-        }
-
+        if (filteredData.isEmpty) showNoDataMessage(targetDate);
+        else renderContent(filteredData);
         loading.style.display = 'none';
         content.style.display = 'block';
-
-        // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
       } catch (error) {
         loading.innerHTML = `<div class="loading-icon">❌</div><p>${translations[currentLanguage]['failed-load']}</p>`;
-        console.error('Error fetching data:', error);
       }
     }
-
-    // Load data by custom date
+    
     async function loadDataByCustomDate() {
       const dateInput = document.getElementById('customDateInput');
       if (!dateInput.value) {
         alert(translations[currentLanguage]['select-date-alert']);
         return;
       }
-
       selectedDate = new Date(dateInput.value);
-
       const loading = document.getElementById('loading');
       const content = document.getElementById('content');
-
       loading.style.display = 'block';
       content.style.display = 'none';
-
-      // Update date display
       updateDateDisplayForCustomDate(selectedDate);
-
       try {
-        // Load all data once
-        if (allPodcasts.length === 0) {
-          [allPodcasts, allTweets, allBlogs] = await Promise.all([
-            fetch(PODCASTS_URL).then(res => res.json()),
-            fetch(TWEETS_URL).then(res => res.json()),
-            fetch(BLOGS_URL).then(res => res.json())
-          ]);
+        if (allTweets.length === 0) {
+          [allTweets] = await Promise.all([fetch(TWEETS_URL).then(res => res.json())]);
         }
-
-        // Filter data by custom date
         const filteredData = filterDataByDate(selectedDate);
         filteredDataCache = filteredData;
-
-        if (filteredData.isEmpty) {
-          showNoDataForCustomDate(selectedDate);
-        } else {
-          renderContent(filteredData);
-        }
-
+        if (filteredData.isEmpty) showNoDataForCustomDate(selectedDate);
+        else renderContent(filteredData);
         loading.style.display = 'none';
         content.style.display = 'block';
-
-        // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
       } catch (error) {
         loading.innerHTML = `<div class="loading-icon">❌</div><p>${translations[currentLanguage]['failed-load']}</p>`;
-        console.error('Error fetching data:', error);
       }
     }
-
-    // Filter data by date - This is the key fix!
+    
     function filterDataByDate(targetDate) {
-      // Helper to extract date from item
-      const getItemDate = (item) => {
-        // Try different date fields that might exist in the data
-        if (item.date) return new Date(item.date);
-        if (item.published_at) return new Date(item.published_at);
-        if (item.created_at) return new Date(item.created_at);
-        if (item.timestamp) return new Date(item.timestamp);
-        if (item.pubDate) return new Date(item.pubDate);
-        // If no date field, return null
-        return null;
-      };
-
-      // Filter podcasts by date (相对值：根据选择的日期动态过滤)
-      const filteredPodcasts = allPodcasts.filter(item => {
-        const itemDate = getItemDate(item);
-        return itemDate && isSameDate(itemDate, targetDate);
-      }).slice(0, 3);  // 限制显示数量
-
-      // Filter tweets by date (相对值：根据选择的日期动态过滤)
-      const filteredTweets = allTweets.filter(item => {
-        const itemDate = getItemDate(item);
-        return itemDate && isSameDate(itemDate, targetDate);
-      }).slice(0, 5);  // 限制显示数量
-
-      // Filter blogs by date (相对值：根据选择的日期动态过滤)
-      const filteredBlogs = allBlogs.filter(item => {
-        const itemDate = getItemDate(item);
-        return itemDate && isSameDate(itemDate, targetDate);
-      }).slice(0, 3);  // 限制显示数量
-
-      const isEmpty = filteredPodcasts.length === 0 &&
-                     filteredTweets.length === 0 &&
-                     filteredBlogs.length === 0;
-
-      return {
-        podcasts: filteredPodcasts,
-        tweets: filteredTweets,
-        blogs: filteredBlogs,
-        isEmpty: isEmpty,
-        date: targetDate
-      };
+      let allTweetsFlat = [];
+      allTweets.forEach(user => {
+        if (user.tweets) {
+          user.tweets.forEach(tweet => {
+            allTweetsFlat.push({ ...tweet, userName: user.name, userHandle: user.handle });
+          });
+        }
+      });
+      const filteredTweets = allTweetsFlat.filter(tweet => {
+        const tweetDate = new Date(tweet.createdAt);
+        return isSameDate(tweetDate, targetDate);
+      });
+      return { podcasts: [], tweets: filteredTweets, blogs: [], isEmpty: filteredTweets.length === 0, date: targetDate };
     }
-
-    // Update date display
+    
     function updateDateDisplay(offset) {
       const display = document.getElementById('currentDateDisplay');
       const date = new Date();
       date.setDate(date.getDate() + offset);
-
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-      };
-
-      display.textContent = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', options);
+      display.textContent = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
     }
-
-    // Update date display for custom date
+    
     function updateDateDisplayForCustomDate(date) {
       const display = document.getElementById('currentDateDisplay');
-
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-      };
-
-      display.textContent = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', options);
+      display.textContent = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
     }
-
-    // Render content
-    function renderContent(data) {
-      renderPodcasts(data.podcasts, data.date);
-      renderTweets(data.tweets, data.date);
-      renderBlogs(data.blogs, data.date);
-    }
-
-    // Show no data message
+    
+    function renderContent(data) { renderTweets(data.tweets, data.date); }
+    
     function showNoDataMessage(date) {
-      const container = document.getElementById('podcasts-content');
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-      };
-      const dateStr = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', options);
-      const message = translations[currentLanguage]['no-data-custom'].replace('{date}', dateStr);
-      container.innerHTML = `<div style="text-align: center; padding: 40px; color: #86868b; font-size: 17px;">${message}</div>`;
+      const container = document.getElementById('tweets-content');
+      const dateStr = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+      container.innerHTML = `<div style="text-align: center; padding: 40px; color: #86868b; font-size: 17px;">${translations[currentLanguage]['no-data-custom'].replace('{date}', dateStr)}</div>`;
     }
-
-    // Show no data message for custom date
-    function showNoDataForCustomDate(date) {
-      const container = document.getElementById('podcasts-content');
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-      };
-      const dateStr = date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', options);
-      const message = translations[currentLanguage]['no-data-custom'].replace('{date}', dateStr);
-      container.innerHTML = `<div style="text-align: center; padding: 40px; color: #86868b; font-size: 17px;">${message}</div>`;
-    }
-
-    // Render podcasts
-    function renderPodcasts(podcasts, date) {
-      const container = document.getElementById('podcasts-content');
-      if (podcasts.length === 0) {
-        container.innerHTML = `<div style="text-align: center; padding: 40px; color: #86868b; font-size: 17px;">${translations[currentLanguage]['no-data']}</div>`;
-        return;
-      }
-      container.innerHTML = podcasts.map(podcast => `
-        <div class="content-item">
-          <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-          <div class="item-title">${podcast.name || podcast.title || 'Untitled'}</div>
-          <div class="item-content">${podcast.description || podcast.summary || 'No description available'}</div>
-          ${podcast.url ? `<a href="${podcast.url}" target="_blank" class="item-link">${translations[currentLanguage]['listen-now']}</a>` : ''}
-        </div>
-      `).join('');
-    }
-
-    // Render tweets
+    
+    function showNoDataForCustomDate(date) { showNoDataMessage(date); }
+    
     function renderTweets(tweets, date) {
       const container = document.getElementById('tweets-content');
       if (tweets.length === 0) {
@@ -935,58 +508,23 @@
       container.innerHTML = tweets.map(tweet => `
         <div class="content-item">
           <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-          <div class="item-title">${tweet.name || tweet.handle || 'Unknown User'}</div>
-          <div class="item-content">${tweet.text || tweet.content || 'No content available'}</div>
+          <div class="item-title">@${tweet.userHandle || 'Unknown'}</div>
+          <div class="item-content">${tweet.text || 'No content available'}</div>
           ${tweet.url ? `<a href="${tweet.url}" target="_blank" class="item-link">${translations[currentLanguage]['view-tweet']}</a>` : ''}
         </div>
       `).join('');
     }
-
-    // Render blogs
-    function renderBlogs(blogs, date) {
-      const container = document.getElementById('blogs-content');
-      if (blogs.length === 0) {
-        container.innerHTML = `<div style="text-align: center; padding: 40px; color: #86868b; font-size: 17px;">${translations[currentLanguage]['no-data']}</div>`;
-        return;
-      }
-      container.innerHTML = blogs.map(blog => `
-        <div class="content-item">
-          <div class="item-date">${date.toLocaleDateString(currentLanguage === 'zh' ? 'zh-CN' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-          <div class="item-title">${blog.title || blog.name || 'Untitled'}</div>
-          <div class="item-content">${blog.description || blog.summary || 'No description available'}</div>
-          ${blog.url ? `<a href="${blog.url}" target="_blank" class="item-link">${translations[currentLanguage]['read-more']}</a>` : ''}
-        </div>
-      `).join('');
-    }
-
-    // Load today's data on page load
+    
     document.addEventListener('DOMContentLoaded', () => {
-      // Initialize language
       switchLanguage(currentLanguage);
-
-      // Initialize date input to today
       const dateInput = document.getElementById('customDateInput');
       const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
-      dateInput.value = `${year}-${month}-${day}`;
-
-      // Add event listener for date input change
-      dateInput.addEventListener('change', () => {
-        if (dateInput.value) {
-          loadDataByCustomDate();
-        }
-      });
-
-      // Load data
+      dateInput.value = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+      dateInput.addEventListener('change', () => { if (dateInput.value) loadDataByCustomDate(); });
       loadDataByOffset(0);
     });
-
-    // Auto-refresh every 30 minutes
-    setInterval(() => {
-      loadDataByOffset(currentOffset);
-    }, 30 * 60 * 1000);
+    
+    setInterval(() => { loadDataByOffset(currentOffset); }, 30 * 60 * 1000);
   </script>
 </body>
 </html>
